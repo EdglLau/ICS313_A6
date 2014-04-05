@@ -11,7 +11,19 @@
                         (attic (you are in the attic.
                             there is a giant welding torch in the corner.))
                         (kitchen (you are in the kitchen. 
-                            There is a platter in front of you.))))
+                            Default text))
+                        (area5 (you are in the area5 
+                            Default text))
+                        (area6 (you are in the area6 
+                            Default text))
+                        (area7 (you are in the area7 
+                            Default text))
+                        (area8 (you are in the area8 
+                            Default text))
+                        (area9 (you are in the area9 
+                            Default text))
+                        (area10 (you are in the area10 
+                            Default text))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
@@ -23,7 +35,11 @@
                                      (kitchen north door))
                         (garden (living-room east door))
                         (attic (living-room downstairs ladder))
-                        (kitchen (living-room south door))))
+                        (kitchen (living-room south door))
+
+
+
+))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
