@@ -57,7 +57,7 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword chain frog piece1))
+(defparameter *objects* '(sword chain frog triforce))
 
 ; This parameter gives where the objects are in the game.
 (defparameter *object-locations* '((sword home)
@@ -264,62 +264,62 @@
           (pushnew ',command *allowed-commands*)))
 
 ;the parameters give the combined object after the collected pieces are combined into one object.
-(defparameter *half-treasurekey* nil)
-(defparameter *three-quarters-treasurekey* nil)
-(defparameter *treasurekey* nil)
+(defparameter *half-triforce* nil)
+(defparameter *three-quarters-triforce* nil)
+(defparameter *triforce* nil)
 (defparameter *horcrux-sword* nil)
 (defparameter *He-Man-Sword* nil)
 (defparameter *lightsaber* nil)
 
-;The combine-half is the first macro action for combining the first half of the treasurekey, using treasurekey-piece1and treasurekey-piece2
-(game-action combine-half treasurekey-piece1 treasurekey-piece2 Blood-Island
-  (if(not(have 'treasurekey-piece1))
-      '(you do not have both the treasurekey-piece1 and treasurekey-piece2)
-    (if (and(have 'treasurekey-piece2)(not *half-treasurekey*))
+;The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
+(game-action combine-half triforce-piece1 triforce-piece2 Blood-Island
+  (if(not(have 'triforce-piece1))
+      '(you do not have both the triforce-piece1 and triforce-piece2)
+    (if (and(have 'triforce-piece2)(not *half-triforce*))
     (progn 
-      (setf *half-treasurekey* 't)
-      (new-object half-treasurekey Blood-Island)
+      (setf *half-triforce* 't)
+      (new-object half-triforce Blood-Island)
       (setf *objects*
-            (remove 'treasurekey-piece1 *objects*))
+            (remove 'triforce-piece1 *objects*))
       (setf *objects*
-            (remove 'treasurekey-piece2 *objects*))
-      (pickup 'half-treasurekey)
-      '(the half-treasurekey has been made.))
-    '(you do not have the treasurekey-piece2.))))
+            (remove 'triforce-piece2 *objects*))
+      (pickup 'half-triforce)
+      '(the half-triforce has been made.))
+    '(you do not have the triforce-piece2.))))
 
 ;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
-; using half-treasurekey and treasurekey-piece3
-(game-action combine-three-quarters half-treasurekey treasurekey-piece3 Skeleton-Island
-  (if(not(have 'half-treasurekey))
-      '(you do not have both the half-treasurekey and treasurekey-piece3)
-    (if (and(have 'treasurekey-piece3)(not *three-quarters-treasurekey*))
+; using half-triforce and triforce-piece3
+(game-action combine-three-quarters half-triforce triforce-piece3 Skeleton-Island
+  (if(not(have 'half-triforce))
+      '(you do not have both the half-triforce and triforce-piece3)
+    (if (and(have 'triforce-piece3)(not *three-quarters-triforce*))
     (progn 
-      (setf *three-quarters-treasurekey* 't)
-      (new-object three-quarters-treasurekey Skeleton-Island)
+      (setf *three-quarters-triforce* 't)
+      (new-object three-quarters-triforce Skeleton-Island)
       (setf *objects*
-            (remove 'half-treasurekey *objects*))
+            (remove 'half-triforce *objects*))
       (setf *objects*
-            (remove 'treasurekey-piece3 *objects*))
-      (pickup 'three-quarters-treasurekey)
-      '(the three-quarters-treasurekey has been made.))
-    '(you do not have the treasurekey-piece3.))))
+            (remove 'triforce-piece3 *objects*))
+      (pickup 'three-quarters-triforce)
+      '(the three-quarters-triforce has been made.))
+    '(you do not have the triforce-piece3.))))
 
 ;The combine is the third macro action for combining the first three pieces of the treasurekey, 
-; using three-quarters-treasurekey and treasurekey-piece4
-(game-action combine three-quarters-treasurekey treasurekey-piece4 Mysterious-Island
-  (if(not(have 'three-quarters-treasurekey))
-      '(you do not have both the three-quarters-treasurekey and treasurekey-piece4)
-    (if (and(have 'treasurekey-piece4)(not *treasurekey*))
+; using three-quarters-triforce and triforce-piece4
+(game-action combine three-quarters-triforce triforce-piece4 Mysterious-Island
+  (if(not(have 'three-quarters-triforce))
+      '(you do not have both the three-quarters-triforce and triforce-piece4)
+    (if (and(have 'triforce-piece4)(not *treasurekey*))
     (progn 
-      (setf *treasurekey* 't)
-      (new-object treasurekey Mysterious-Island)
+      (setf *triforce* 't)
+      (new-object triforce Mysterious-Island)
       (setf *objects*
-            (remove 'three-quarters-treasurekey *objects*))
+            (remove 'three-quarters-triforce *objects*))
       (setf *objects*
-            (remove 'treasurekey-piece4 *objects*))
-      (pickup 'treasurekey)
-      '(the treasurekey has been made.))
-    '(you do not have the treasurekey-piece4.))))
+            (remove 'triforce-piece4 *objects*))
+      (pickup 'triforce)
+      '(the triforce has been made.))
+    '(you do not have the triforce-piece4.))))
    
 ;power-to-save macro combines the sword and the cross into one object, the horcrux-sword.
 (game-action power-to-save sword cross Rum-Island
@@ -372,7 +372,7 @@
 ;fight-Morgan uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Morgan sword Captain-Morgan Rum-Island
              (cond ((have 'sword) (new-object cross Rum-Island)
-                                  (new-object treasurekey-piece1 Rum-Island)
+                                  (new-object triforce-piece1 Rum-Island)
                                   '(You killed Captain Morgan and find the first piece of the key
                                   guarded by Captain Morgan. You continue 
                                   forward in the search of the keys to unlock the treasure!))
@@ -387,7 +387,7 @@
 ;fight-Mary uses the game-action macro to determine the outcome of the game, whether you can move on.
 (game-action fight-Mary horcrux-sword Bloody-Mary Blood-Island
              (cond ((have 'horcrux-sword) (new-object grayskull Blood-Island)
-                                  (new-object treasurekey-piece2 Blood-Island)
+                                  (new-object triforce-piece2 Blood-Island)
                                   '(You killed Bloody-Mary and find the second piece of the key
                                   guarded by Bloody-Mary. You continue 
                                   forward in the search of the keys to unlock the treasure!))
@@ -401,7 +401,7 @@
 ;fight-Skeletor uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Skeletor he-man-sword Skeletor Skeleton-Island
              (cond ((have 'he-man-sword) (new-object skeletor-sword Skeleton-Island)
-                                  (new-object treasurekey-piece3 Skeleton-Island)
+                                  (new-object triforce-piece3 Skeleton-Island)
                                   '(You killed Skeletor and find the third piece of the key
                                   guarded by Skeletor. You continue 
                                   forward in the search of the keys to unlock the treasure!))
@@ -413,7 +413,7 @@
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Willy lightsaber One-Eyed-Willy Mystererious-Island
-             (cond ((have 'lightsaber) (new-object treasurekey-piece4 Mysterious-Island)
+             (cond ((have 'lightsaber) (new-object triforce-piece4 Mysterious-Island)
                                   '(You killed One-Eyed-Willy and find the fourth piece of the key
                                   guarded by One-Eyed-Willy. You continue 
                                   forward in the search of the keys to unlock the treasure!))
