@@ -258,41 +258,170 @@
             '(i cant ,command like that.)))
           (pushnew ',command *allowed-commands*)))
 
-; Sets the parameter for the welded chain object
-(defparameter *chain-welded* nil)
+;the parameters give the combined object after the collected pieces are combined into one object.
+(defparameter *half-treasurekey* nil)
+(defparameter *three-quarters-treasurekey* nil)
+(defparameter *treasurekey* nil)
+(defparameter *horcrux-sword* nil)
+(defparameter *He-Man-Sword* nil)
+(defparameter *lightsaber* nil)
 
-; Uses the game-action macro to weld the chain and the bucket.
-(game-action weld chain bucket attic
-             (if (and (have 'bucket) (not *chain-welded*))
-                 (progn (setf *chain-welded* 't)
-                        '(the chain is now securely welded to the bucket.))
-               '(you do not have a bucket.)))
+;The combine-half is the first macro action for combining the first half of the treasurekey, using treasurekey-piece1and treasurekey-piece2
+(game-action combine-half treasurekey-piece1 treasurekey-piece2 Blood-Island
+  (if(not(have 'treasurekey-piece1))
+      '(you do not have both the treasurekey-piece1 and treasurekey-piece2)
+    (if (and(have 'treasurekey-piece2)(not *half-treasurekey*))
+    (progn 
+      (setf *half-treasurekey* 't)
+      (new-object half-treasurekey Blood-Island)
+      (setf *objects*
+            (remove 'treasurekey-piece1 *objects*))
+      (setf *objects*
+            (remove 'treasurekey-piece2 *objects*))
+      (pickup 'half-treasurekey)
+      '(the half-treasurekey has been made.))
+    '(you do not have the treasurekey-piece2.))))
 
-; Sets the combined piece using the pieces from the previous assignment
-(defparameter *star-power* nil)
+;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
+; using half-treasurekey and treasurekey-piece3
+(game-action combine-three-quarters half-treasurekey treasurekey-piece3 Skeleton-Island
+  (if(not(have 'half-treasurekey))
+      '(you do not have both the half-treasurekey and treasurekey-piece3)
+    (if (and(have 'treasurekey-piece3)(not *three-quarters-treasurekey*))
+    (progn 
+      (setf *three-quarters-treasurekey* 't)
+      (new-object three-quarters-treasurekey Skeleton-Island)
+      (setf *objects*
+            (remove 'half-treasurekey *objects*))
+      (setf *objects*
+            (remove 'treasurekey-piece3 *objects*))
+      (pickup 'three-quarters-treasurekey)
+      '(the three-quarters-treasurekey has been made.))
+    '(you do not have the treasurekey-piece3.))))
 
-; Uses the game-action macro to combine the star pieces into one object
-(game-action power starpiece1 starpiece2 attic
-             (if (and (have 'starpiece1) (not *star-power*))
-                 (progn (setf *star-power* 't)
-                        '(the star has been formed and is giving full power.))
-               '(you do not have all the pieces to the star.)))
+;The combine is the third macro action for combining the first three pieces of the treasurekey, 
+; using three-quarters-treasurekey and treasurekey-piece4
+(game-action combine three-quarters-treasurekey treasurekey-piece4 Mysterious-Island
+  (if(not(have 'three-quarters-treasurekey))
+      '(you do not have both the three-quarters-treasurekey and treasurekey-piece4)
+    (if (and(have 'treasurekey-piece4)(not *treasurekey*))
+    (progn 
+      (setf *treasurekey* 't)
+      (new-object treasurekey Mysterious-Island)
+      (setf *objects*
+            (remove 'three-quarters-treasurekey *objects*))
+      (setf *objects*
+            (remove 'treasurekey-piece4 *objects*))
+      (pickup 'treasurekey)
+      '(the treasurekey has been made.))
+    '(you do not have the treasurekey-piece4.))))
+   
+;power-to-save macro combines the sword and the cross into one object, the horcrux-sword.
+(game-action power-to-save sword cross Rum-Island
+  (if(not(have 'sword))
+      '(you do not have both the sword and the cross)
+    (if (and(have 'cross)(not *horcrux-sword*))
+    (progn 
+      (setf *horcrux-sword* 't)
+      (new-object horcrux-sword Rum-Island)
+      (setf *objects*
+            (remove 'sword *objects*))
+      (setf *objects*
+            (remove 'cross *objects*))
+      (pickup 'horcrux-sword)
+      '(the horcrux-sword has been made. you can now defeat Bloody Mary.))
+    '(you do not have the cross.))))
 
-; Creates the parameter for the filled bucket object
-(defparameter *bucket-filled* nil)
+;i-have-the-power combines the horcrux sword with the grayskull to form the he-man-sword.
+(game-action i-have-the-power horcrux-sword grayskull Blood-Island
+  (if(not(have 'horcrux-sword))
+      '(you do not have both the horcrux-sword and the grayskull)
+    (if (and(have 'grayskull)(not *he-man-sword*))
+    (progn 
+      (setf *he-man-sword* 't)
+      (new-object he-man-sword Blood-Island)
+      (setf *objects*
+            (remove 'horcrux-sword *objects*))
+      (setf *objects*
+            (remove 'grayskull *objects*))
+      (pickup 'he-man-sword)
+      '(the he-man-sword has been made. you can now defeat Skeletor.))
+    '(you do not have the grayskull.))))
 
-; Uses the game-action macro to fill the bucket with water from the well.
-(game-action dunk bucket well garden
-             (if *chain-welded* 
-                 (progn (setf *bucket-filled* 't)
-                        '(the bucket is now full of water))
-               '(the water level is too low to reach.)))
+;jedi-power combines the he-man-sword with the skeletor-sword to make the lightsaber
+(game-action jedi-power he-man-sword skeletor-sword Skeleton-Island
+  (if(not(have 'he-man-sword))
+      '(you do not have both the he-man-sword and the skeletor-sword)
+    (if (and(have 'skeletor-sword)(not *lightsaber*))
+    (progn 
+      (setf *lightsaber* 't)
+      (new-object lightsaber Skeleton-Island)
+      (setf *objects*
+            (remove 'he-man-sword *objects*))
+      (setf *objects*
+            (remove 'skeletor-sword *objects*))
+      (pickup 'lightsaber)
+      '(the lightsaber has been made. you can now defeat One-Eyed Willy.))
+    '(you do not have the skeletor-sword.))))
 
-; Uses the game-action macro to build a new command that determines the outcome of the game.
-(game-action splash bucket wizard living-room
-             (cond ((not *bucket-filled*) '(the bucket has nothing in it.))
-                   ((have 'frog) '(the wizard awakens and sees that you stole his frog. 
-                                   he is so upset he banishes you to the 
-                                   netherworlds- you lose! the end.))
-                   (t '(the wizard awakens from his slumber and greets you warmly. 
-                        he hands you the magic low-carb donut- you win! the end.))))
+;fight-Morgan uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+(game-action fight-Morgan sword Captain-Morgan Rum-Island
+             (cond ((have 'sword) (new-object cross Rum-Island)
+                                  (new-object treasurekey-piece1 Rum-Island)
+                                  '(You killed Captain Morgan and find the first piece of the key
+                                  guarded by Captain Morgan. You continue 
+                                  forward in the search of the keys to unlock the treasure!))
+                  (t 
+                   (setf *location* 'pirate-lair)
+                   (setf *objects* '(sword))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword pirate-lair)))
+                    '(You fought valiantly but without a sword you are no match for Captain
+                        Morgan. You lose! Try again!))))
+
+;fight-Mary uses the game-action macro to determine the outcome of the game, whether you can move on.
+(game-action fight-Mary horcrux-sword Bloody-Mary Blood-Island
+             (cond ((have 'horcrux-sword) (new-object grayskull Blood-Island)
+                                  (new-object treasurekey-piece2 Blood-Island)
+                                  '(You killed Bloody-Mary and find the second piece of the key
+                                  guarded by Bloody-Mary. You continue 
+                                  forward in the search of the keys to unlock the treasure!))
+                  (t 
+                   (setf *location* 'pirate-lair)
+                   (setf *objects* '(sword))
+                   ;(setf *objects-locations 'body nil)
+                   (setf *objects-locations* '((sword pirate-lair)))
+                    '(You fought valiantly but without a horcrux-sword you are no match for Bloody-Mary. You lose! Try again!))))
+
+;fight-Skeletor uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+(game-action fight-Skeletor he-man-sword Skeletor Skeleton-Island
+             (cond ((have 'he-man-sword) (new-object skeletor-sword Skeleton-Island)
+                                  (new-object treasurekey-piece3 Skeleton-Island)
+                                  '(You killed Skeletor and find the third piece of the key
+                                  guarded by Skeletor. You continue 
+                                  forward in the search of the keys to unlock the treasure!))
+                  (t 
+                   (setf *location* 'pirate-lair)
+                   (setf *objects* '(sword))
+                   (setf *objects-locations* '((sword pirate-lair)))
+                    '(You fought valiantly but without the he-man-sword you are no match for Skeletor. You lose! Try again!))))
+
+;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
+(game-action fight-Willy lightsaber One-Eyed-Willy Mystererious-Island
+             (cond ((have 'lightsaber) (new-object treasurekey-piece4 Mysterious-Island)
+                                  '(You killed One-Eyed-Willy and find the fourth piece of the key
+                                  guarded by One-Eyed-Willy. You continue 
+                                  forward in the search of the keys to unlock the treasure!))
+                  (t 
+                   (setf *location* 'pirate-lair)
+                   (setf *objects* '(sword))
+                   (setf *objects-locations* '((sword pirate-lair)))
+                    '(You fought valiantly but without the lightsaber you are no match for One-Eyed-Willy. You lose! Try again!))))
+
+;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
+(game-action unlock-treasure treasurekey Treasure-Chest Hawaii
+             (cond ((have 'treasurekey) '(ARR!! You unlocked the Treasure-Chest. The plunder is
+                                                yours! You win!))
+                  (t                               
+                    '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
+                      You should look around more to find them.))))
