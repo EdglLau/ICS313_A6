@@ -40,7 +40,8 @@
                         (catacombs 
                               (graveyard outside hole))
                         (forest 
-                              (town north path)) 
+                              (town north path)
+                              (cave '(into a cave) '(cave entrance))) 
                         (area6 ())
                         (area7 ())
                         (area8 ())
