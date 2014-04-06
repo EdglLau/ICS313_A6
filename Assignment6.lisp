@@ -41,7 +41,7 @@
                               (graveyard outside hole))
                         (forest 
                               (town north path)
-                              (cave '(into a cave) '(cave entrance))) 
+                              (cave ? ?)) 
                         (area6 ())
                         (area7 ())
                         (area8 ())
