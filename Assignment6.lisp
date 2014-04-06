@@ -57,13 +57,10 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword chain frog triforce))
+(defparameter *objects* '(sword chain frog triforce-piece1 triforce-piece2 triforce-piece3 triforce-piece4 triforce))
 
 ; This parameter gives where the objects are in the game.
 (defparameter *object-locations* '((sword home)
-                                   (chain town)
-                                   (frog town)
-                                   (piece1 town)
                                    ;(defaultitem1 area3)
                                    ;(defaultitem2 area3)
                                    ;(defaultitem3 area4)
@@ -217,7 +214,7 @@
    (t "Location already exists")))
 
 ; Adding a new location in to test                                     
-(new-location bedroom You are now in the bedroom. Every wizard needs his sleep.)
+;(new-location bedroom You are now in the bedroom. Every wizard needs his sleep.)
 (new-location outside You have jumped out the window and died. The end.)
 
 ; New implementation of new-path macro
@@ -249,7 +246,7 @@
                  (cdr (assoc ',origin *edges*)) :test 'equal)))))
 
 ; Add paths to the new location
-(new-path home bedroom east door west)
+;(new-path home bedroom east door west)
 (new-path attic outside outside window "unable")
 
 ; Macro to run different commands inside the game-repl
@@ -309,7 +306,7 @@
 (game-action combine three-quarters-triforce triforce-piece4 Mysterious-Island
   (if(not(have 'three-quarters-triforce))
       '(you do not have both the three-quarters-triforce and triforce-piece4)
-    (if (and(have 'triforce-piece4)(not *treasurekey*))
+    (if (and(have 'triforce-piece4)(not *triforce*))
     (progn 
       (setf *triforce* 't)
       (new-object triforce Mysterious-Island)
@@ -424,9 +421,9 @@
                     '(You fought valiantly but without the lightsaber you are no match for One-Eyed-Willy. You lose! Try again!))))
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-(game-action unlock-treasure treasurekey Treasure-Chest Hawaii
-             (cond ((have 'treasurekey) '(ARR!! You unlocked the Treasure-Chest. The plunder is
-                                                yours! You win!))
-                  (t                               
-                    '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
-                      You should look around more to find them.))))
+;(game-action unlock-treasure treasurekey Treasure-Chest Hawaii
+ ;            (cond ((have 'treasurekey) '(ARR!! You unlocked the Treasure-Chest. The plunder is
+  ;                                              yours! You win!))
+   ;               (t                               
+    ;                '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
+     ;                 You should look around more to find them.))))
