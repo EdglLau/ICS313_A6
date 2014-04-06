@@ -18,11 +18,11 @@
                             Default text))
                         (lake (you have come upon a lake. 
                             there is a boat.))
-                        (island (you are in the area7 
+                        (island (you are on an island.
                             Default text))
-                        (area9 (you are in the area9 
+                        (desert (you are in a desert. 
                             Default text))
-                        (area10 (you are in the area10 
+                        (oasis (you are in an oasis.
                             Default text))))
 
 ; This function describes the location.
