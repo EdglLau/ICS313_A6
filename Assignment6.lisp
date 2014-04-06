@@ -1,16 +1,16 @@
 ;;; -*- Mode: LISP; Syntax: Common-lisp; Package: USER; Base: 10 -*-
-;;; Name: Samuel Kim, Edgar Lau, Cyrus Wu         Date:03/18/14
-;;; Course: ICS313        Assignment: 5   
-;;; File: samueldj5.lisp
+;;; Name: Samuel Kim, Edgar Lau, Cyrus Wu         Date:04/4/14
+;;; Course: ICS313        Assignment: 6   
+;;; File: assignment6.lisp
 
 ; This parameter shows the description to each place.
-(defparameter *nodes* '((living-room (you are in the living-room.
-                            a wizard is snoring loudly on the couch.))
-                        (garden (you are in a beautiful garden.
-                            there is a well in front of you.))
-                        (attic (you are in the attic.
-                            there is a giant welding torch in the corner.))
-                        (kitchen (you are in the kitchen. 
+(defparameter *nodes* '((home (you currently are at home.
+                            Default text.))
+                        (town (you are in a quiet small town.
+                               there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
+                        (area3 (you are in the area3.
+                            Default text.))
+                        (area4 (you are in the area4. 
                             Default text))
                         (area5 (you are in the area5 
                             Default text))
@@ -30,15 +30,17 @@
    (cadr (assoc location nodes)))
 
 ; This parameter contains the paths that players can take to move between places.
-(defparameter *edges* '((living-room (garden west door)  
-                                     (attic upstairs ladder)
-                                     (kitchen north door))
-                        (garden (living-room east door))
-                        (attic (living-room downstairs ladder))
-                        (kitchen (living-room south door))
-
-
-
+(defparameter *edges* '((home (town south frontdoor))
+                        (town (home north frontdoor)
+                              (area3 south))
+                        ;(area3 (living-room downstairs ladder))
+                        ;(area4 (living-room south door))
+                        ;(area5 ()) 
+                        ;(area6 ())
+                        ;(area7 ())
+                        ;(area8 ())
+                        ;(area9 ())
+                        ;(area10 ()) 
 ))
 
 ; This function describes a specific direction of a path from one location.
@@ -50,18 +52,17 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(whiskey bucket starpiece1 frog starpiece2 chain cake starpiece3))
+(defparameter *objects* '(sword chain frog piece1))
 
 ; This parameter gives where the objects are in the game.
-(defparameter *object-locations* '((whiskey living-room)
-                                   (bucket living-room)
-                                   (starpiece1 living-room)
-                                   (chain garden)
-                                   (frog garden)
-                                   (starpiece2 garden)
-                                   (cake kitchen)
-                                   (starpiece3 kitchen)
-                                   (starpiece4 attic)))
+(defparameter *object-locations* '((sword home)
+                                   (chain town)
+                                   (frog town)
+                                   (piece1 town)
+                                   ;(defaultitem1 area3)
+                                   ;(defaultitem2 area3)
+                                   ;(defaultitem3 area4)
+                                   ))
 
 ; This function lists all the object to a specific location.
 (defun objects-at (loc objs obj-loc)
@@ -72,11 +73,11 @@
 ; This function describes the objects in a specific location.
 (defun describe-objects (loc objs obj-loc)
    (labels ((describe-obj (obj)
-                `(you see a ,obj on the floor.)))
+                `(you see a ,obj here.)))
       (apply #'append (mapcar #'describe-obj (objects-at loc objs obj-loc)))))
 
 ; This parameter gives the starting location for this game.
-(defparameter *location* 'living-room)
+(defparameter *location* 'home)
 
 ; This function allows users to see where they are in this wizard's world.
 (defun look ()
@@ -243,7 +244,7 @@
                  (cdr (assoc ',origin *edges*)) :test 'equal)))))
 
 ; Add paths to the new location
-(new-path living-room bedroom east door west)
+(new-path home bedroom east door west)
 (new-path attic outside outside window "unable")
 
 ; Macro to run different commands inside the game-repl
