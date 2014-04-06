@@ -16,12 +16,14 @@
                            Skulls align the walls and there is a foul smell in the air.  ))
                         (dark-cave (you are in a dark cave. 
                             ))
-                        (labyrinth (You trip and fall down a hole! You are trapped in the labyrinth! It is hard to see. 
-                            ))
-                        (cathedral (you are in a cathedral. People around you are praying for their safety.
-                            Default text))
-                        (mountain (you are on a tall mountain. You hear noises coming from a cave. 
-                            Default text))
+                        (labyrinth (You trip and fall down a hole!
+                            You are trapped in the labyrinth! It is hard to see.))
+                        (cathedral (you are in a cathedral.
+                           People around you are praying for their safety. ))
+                        (mountain (you are on a tall mountain.
+                           You hear noises coming from a cave.))
+                        (dragons-den (You are in the dragons den.
+                            Bones align the floor.))
                         (labyrinth2 (You are in a dark corridor.
                                              ))
                         (labyrinth3 (You are in a dark corridor.
@@ -50,7 +52,9 @@
                                       (mountain west path)
                                       (dark-cave south path))
                         (catacombs (cathedral up hole))
-                        (mountain (forest-trail east path))
+                        (mountain (forest-trail east path)
+                                  (dragons-den up cave))
+                        (dragons-den (mountain outside passage))
                         (dark-cave (forest-trail north path)
                                    (labyrinth south broken-door))
                         (labyrinth (labyrinth2 east path)
