@@ -7,8 +7,8 @@
 (defparameter *nodes* '((home (you currently are at home.
                             Default text.))
                         (town (you are in a quiet small town.
-                               there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
-                        (area3 (you are in the area3.
+                            there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
+                        (catacombs (you are in the catacombs underneath the town.
                             Default text.))
                         (area4 (you are in the area4. 
                             Default text))
