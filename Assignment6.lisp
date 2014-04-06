@@ -30,18 +30,22 @@
    (cadr (assoc location nodes)))
 
 ; This parameter contains the paths that players can take to move between places.
-(defparameter *edges* '((home (town south frontdoor))
-                        (town (home north frontdoor)
-                              (area3 south))
-                        ;(area3 (living-room downstairs ladder))
-                        ;(area4 (living-room south door))
-                        ;(area5 ()) 
-                        ;(area6 ())
-                        ;(area7 ())
-                        ;(area8 ())
-                        ;(area9 ())
-                        ;(area10 ()) 
-))
+(defparameter *edges* '((home (town outside door))
+                        (town (home home door)
+                              (graveyard east path)
+                              (forest south path))
+                        (graveyard 
+                              (town west path)
+                       	      (catacombs down hole))
+                        (catacombs 
+                              (graveyard outside hole))
+                        (forest 
+                              (town north path)) 
+                        (area6 ())
+                        (area7 ())
+                        (area8 ())
+                        (area9 ())
+                        (area10 ())))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
