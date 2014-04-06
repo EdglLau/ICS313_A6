@@ -41,7 +41,9 @@
                               (graveyard outside hole))
                         (forest 
                               (town north path)
-                              (cave ? ?)) 
+                              (cave underground path)
+                              (lake east path)
+                              (desert south path)) 
                         (area6 ())
                         (area7 ())
                         (area8 ())
