@@ -8,6 +8,8 @@
                             Default text.))
                         (town (you are in a small, quiet town.
                             there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
+                        (graveyard (you are in the graveyard next to town. 
+                            Default text))
                         (catacombs (you are in the catacombs underneath the town.
                             Default text.))
                         (forest (you are in a dreary forest outside of town. 
@@ -15,10 +17,8 @@
                         (cave (you are in a dark cave. 
                             Default text))
                         (lake (you have come upon a lake. 
-                            Default text))
-                        (area7 (you are in the area7 
-                            Default text))
-                        (area8 (you are in the area8 
+                            there is a boat.))
+                        (island (you are in the area7 
                             Default text))
                         (area9 (you are in the area9 
                             Default text))
