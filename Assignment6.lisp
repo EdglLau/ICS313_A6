@@ -4,7 +4,7 @@
 ;;; File: assignment6.lisp
 
 ; This parameter shows the description to each place.
-(defparameter *nodes* '((home (you currently are at home.
+(defparameter *nodes* '((home (you are currently at home.
                             Default text.))
                         (town (you are in a small, quiet town.
                             there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
@@ -12,9 +12,9 @@
                             Default text.))
                         (forest (you are in a dreary forest outside of town. 
                             Default text))
-                        (area5 (you are in the area5 
+                        (cave (you are in a dark cave. 
                             Default text))
-                        (area6 (you are in the area6 
+                        (lake (you have come upon a lake. 
                             Default text))
                         (area7 (you are in the area7 
                             Default text))
