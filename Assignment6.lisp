@@ -6,11 +6,11 @@
 ; This parameter shows the description to each place.
 (defparameter *nodes* '((home (you currently are at home.
                             Default text.))
-                        (town (you are in a quiet small town.
+                        (town (you are in a small, quiet town.
                             there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
                         (catacombs (you are in the catacombs underneath the town.
                             Default text.))
-                        (area4 (you are in the area4. 
+                        (forest (you are in a dreary forest outside of town. 
                             Default text))
                         (area5 (you are in the area5 
                             Default text))
