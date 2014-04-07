@@ -11,15 +11,15 @@
                         (forest-trail (you are on the forest trail.
                             A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
                         (Castle (You are in the Castle.
-                           The king has offered a reward to someone who can kill the monsters. ))
+                           The king has offered a reward to someone who can kill the monsters and find his treasure key. ))
                         (treasure-room (You are in the treasure room.
-                           Congragulations! You win!))
+                           There is a treasure chest in front of you.))
                         (catacombs (You are in the catacombs beneath the cathedral.
-                           Skulls align the walls and there is a foul smell in the air. You see a necromancer using unholy powers to summon zombies.))
+                           Skulls align the walls and there is a foul smell in the air. There is a necromancer in the area.))
                         (dark-cave (you are in a dark cave. You can barely see anything except for a torch on the wall. 
                             ))
                         (labyrinth (You trip and fall down a hole!
-                            You are trapped in the labyrinth! There are traps everywhere.))
+                            You are trapped in the labyrinth! There are traps everywhere. You remember someone in the village told you which way to go...))
                         (cathedral (you are in a cathedral.
                            People around you are praying for their safety. ))
                         (mountain (you are on a tall mountain.
@@ -35,7 +35,7 @@
                         (hole (You have fell down a hole and died! Game Over.
                                    ))
                         (minotaur-lair (You are in the minotaur lair. 
-                             A large minotaur roars and charges at you. A holy cross dangles on its neck. 
+                             You see a minotaur at the end of the room. 
                                         ))))
 
 ; This function describes the location.
@@ -49,7 +49,7 @@
                                  (cathedral east path)
                                  (forest-trail south path))
                         (Castle (village east path))
-                        (cathedral (village west path)
+                        (cathedral (village west door)
                                    (catacombs down hole))
                         (forest-trail (village north path)
                                       (mountain west path)
@@ -286,7 +286,7 @@
     (if (and(have 'treasurekey-piece2)(not *half-treasurekey*))
     (progn 
       (setf *half-treasurekey* 't)
-      (new-object half-treasurekey Blood-Island)
+      (new-object half-treasurekey catacombs)
       (setf *objects*
             (remove 'treasurekey-piece1 *objects*))
       (setf *objects*
@@ -303,7 +303,7 @@
     (if (and(have 'treasurekey-piece3)(not *three-quarters-treasurekey*))
     (progn 
       (setf *three-quarters-treasurekey* 't)
-      (new-object three-quarters-treasurekey Skeleton-Island)
+      (new-object three-quarters-treasurekey dragons-den)
       (setf *objects*
             (remove 'half-treasurekey *objects*))
       (setf *objects*
@@ -320,7 +320,7 @@
     (if (and(have 'treasurekey-piece4)(not *treasurekey*))
     (progn 
       (setf *treasurekey* 't)
-      (new-object treasurekey Mysterious-Island)
+      (new-object treasurekey castle)
       (setf *objects*
             (remove 'three-quarters-treasurekey *objects*))
       (setf *objects*
@@ -420,9 +420,7 @@
 
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-;(game-action unlock-treasure Treasurekey Treasure-Chest Castle
- ;            (cond ((have 'Treasurekey) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
-  ;                                              yours! You win!))
-   ;               (t                               
-    ;                '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
-     ;                 You should look around more to find them.))
+(game-action unlock-treasure treasurekey treasure-chest Castle
+             (cond ((have 'treasurekey) '(The king is pleased that you You unlocked the Treasure-Chest. The treasure is yours! You win!))
+                 (t                               
+                    '(Sorry, you haven't collected all the pieces of the treasure-key and combined it to make the treasure-key. You should look around more to find them.))))
