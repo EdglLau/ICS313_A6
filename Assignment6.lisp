@@ -5,83 +5,74 @@
 
 ; This parameter shows the description to each place.
 (defparameter *nodes* '((house (you are currently at your house.
-                        	You hear commotion outside.))
+                            You hear commotion outside.))
                         (village (you are in a small town.
-                        	There is panic among the villagers as monsters have appeared and people are missing!))
+                            There is panic among the villagers as monsters have appeared and people are missing!))
                         (forest-trail (you are on the forest trail.
-                        	A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
+                            A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
                         (Castle (You are in the Castle.
-                        	The king has offered a reward to someone who can kill the monsters.))
+                           The king has offered a reward to someone who can kill the monsters. ))
                         (treasure-room (You are in the treasure room.
-                        	Congragulations! You win!))
+                           Congragulations! You win!))
                         (catacombs (You are in the catacombs beneath the cathedral.
-                        	Skulls align the walls and there is a foul smell in the air. You see a necromancer using unholy powers to summon zombies.))
-                        (dark-cave (you are in a dark cave.))
+                           Skulls align the walls and there is a foul smell in the air. You see a necromancer using unholy powers to summon zombies.))
+                        (dark-cave (you are in a dark cave. 
+                            ))
                         (labyrinth (You trip and fall down a hole!
-                        	You are trapped in the labyrinth! It is hard to see.))
+                            You are trapped in the labyrinth! It is hard to see.))
                         (cathedral (you are in a cathedral.
-                        	People around you are praying for their safety. ))
+                           People around you are praying for their safety. ))
                         (mountain (you are on a tall mountain.
-                        	You hear noises coming from a cave.))
+                           You hear noises coming from a cave.))
                         (dragons-den (You are in the dragons den.
-                        	Bones align the floor.))
-                        (labyrinth2 (You are in a dark corridor.))
-                        (labyrinth3 (You are in a dark corridor.))
+                            Bones align the floor.))
+                        (labyrinth2 (You are in a dark corridor.
+                                             ))
+                        (labyrinth3 (You are in a dark corridor.
+                                            ))
                         (labyrinth4 (You are in a dark corridor.
-                         	You hear growls coming from someplace deeper in the maze.))
-                        (hole (You have fell down a hole and died! Game Over.))
+                            You hear growls coming from someplace deeper in the maze.))
+                        (hole (You have fell down a hole and died! Game Over.
+                                   ))
                         (minotaur-lair (You are in the minotaur lair. 
-                        	A large minotaur roars and charges at you. A holy cross dangles on its neck.))))
+                             A large minotaur roars and charges at you. A holy cross dangles on its neck. 
+                                        ))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
    (cadr (assoc location nodes)))
 
 ; This parameter contains the paths that players can take to move between places.
-(defparameter *edges* '((house 
-				(village outside door))
-                        (village 
-                        	(Castle west path)
-                        	(house inside door)
-                                (cathedral east path)
-                                (forest-trail south path))
-                        (Castle 
-                        	(village east path))
-                        (cathedral 
-                        	(village west path)
-                                (catacombs down hole))
-                        (forest-trail 
-                        	(village north path)
-                                (mountain west path)
-                                (dark-cave south path))
-                        (catacombs 
-                        	(cathedral up hole))
-                        (mountain 
-                        	(forest-trail east path)
-                                (dragons-den up cave))
-                        (dragons-den 
-                        	(mountain outside passage))
-                        (dark-cave 
-                        	(forest-trail north path)
-                                (labyrinth south broken-door))
-                        (labyrinth 
-                        	(labyrinth2 east path)
-                                (hole south path)
-                                (hole west path))
-                        (labyrinth2 
-                        	(hole north path)
-                                (hole east path)
-                                (labyrinth3 south path))
-                        (labyrinth3 
-                        	(hole east path)
-                                (hole south path)
-                                (labyrinth4 west path))
-                        (labyrinth4 
-                        	(hole north path)
-                                (hole west path)
-                                (minotaur-lair south path))
-                        (minotaur-lair 
-                        	(forest-trail up secret-passage))))
+(defparameter *edges* '((house (village outside door))
+                        (village (Castle west path)
+                                 (house inside door)
+                                 (cathedral east path)
+                                 (forest-trail south path))
+                        (Castle (village east path))
+                        (cathedral (village west path)
+                                   (catacombs down hole))
+                        (forest-trail (village north path)
+                                      (mountain west path)
+                                      (dark-cave south path))
+                        (catacombs (cathedral up hole))
+                        (mountain (forest-trail east path)
+                                  (dragons-den up cave))
+                        (dragons-den (mountain outside passage))
+                        (dark-cave (forest-trail north path)
+                                   (labyrinth south broken-door))
+                        (labyrinth (labyrinth2 east path)
+                                   (hole south path)
+                                   (hole west path))
+                        (labyrinth2 (hole north path)
+                                    (hole east path)
+                                    (labyrinth3 south path))
+                        (labyrinth3 (hole east path)
+                                    (hole south path)
+                                    (labyrinth4 west path))
+                        (labyrinth4 (hole north path)
+                                    (hole west path)
+                                    (minotaur-lair south path))
+                        (minotaur-lair (forest-trail up secret-passage))))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
@@ -275,7 +266,7 @@
                  (cdr (assoc ',origin *edges*)) :test 'equal)))))
 
 ; Add paths to the new location
-; (new-path home bedroom east door west)
+;(new-path home bedroom east door west)
 (new-path attic outside outside window "unable")
 
 ; Macro to run different commands inside the game-repl
@@ -289,46 +280,64 @@
             '(i cant ,command like that.)))
           (pushnew ',command *allowed-commands*)))
 
-; The parameters give the combined object after the collected pieces are combined into one object.
-(defparameter *half-triforce* nil)
-(defparameter *triforce* nil)
+;the parameters give the combined object after the collected pieces are combined into one object.
+(defparameter *half-treasurekey* nil)
+(defparameter *three-quarters-treasurekey* nil)
+(defparameter *treasurekey* nil)
 (defparameter *holy-sword* nil)
 (defparameter *enchanted-sword* nil)
 
-; The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
-(game-action combine-half triforce-piece1 triforce-piece2 minotaur-lair
-  (if(not(have 'triforce-piece1))
-      '(you do not have both the triforce-piece1 and triforce-piece2)
-    (if (and(have 'triforce-piece2)(not *half-triforce*))
+;The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and treasurekey-piece2
+(game-action combine-half treasurekey-piece1 treasurekey-piece2 minotaur-lair
+  (if(not(have 'treasurekey-piece1))
+      '(you do not have both the treasurekey-piece1 and treasurekey-piece2)
+    (if (and(have 'treasurekey-piece2)(not *half-treasurekey*))
     (progn 
-      (setf *half-triforce* 't)
-      (new-object half-triforce Blood-Island)
+      (setf *half-treasurekey* 't)
+      (new-object half-treasurekey minotaur-lair)
       (setf *objects*
-            (remove 'triforce-piece1 *objects*))
+            (remove 'treasurekey-piece1 *objects*))
       (setf *objects*
-            (remove 'triforce-piece2 *objects*))
-      (pickup 'half-triforce)
-      '(the half-triforce has been made.))
-    '(you do not have the triforce-piece2.))))
+            (remove 'treasurekey-piece2 *objects*))
+      (pickup 'half-treasurekey)
+      '(the half-treasurekey has been made.))
+    '(you do not have the treasurekey-piece2.))))
 
-; The combine-to-triforce is the second macro action for combining the first three pieces of the treasurekey, 
-; using half-triforce and triforce-piece3 to make into the whole triforce.
-(game-action combine-to-triforce half-triforce triforce-piece3 
-  (if(not(have 'half-triforce))
-      '(you do not have both the half-triforce and triforce-piece3)
-    (if (and(have 'triforce-piece3)(not *triforce*))
+;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
+; using half-treasurekey and treasurekey-piece3
+(game-action combine-three-quarters half-treasurekey treasurekey-piece3 dragon-den
+  (if(not(have 'half-treasurekey))
+      '(you do not have both the half-treasurekey and treasurekey-piece3)
+    (if (and(have 'treasurekey-piece3)(not *three-quarters-treasurekey*))
     (progn 
-      (setf *triforce* 't)
-      (new-object triforce dragons-den)
+      (setf *three-quarters-treasurekey* 't)
+      (new-object three-quarters-treasurekey dragon-den)
       (setf *objects*
-            (remove 'half-triforce *objects*))
+            (remove 'half-treasurekey *objects*))
       (setf *objects*
-            (remove 'triforce-piece3 *objects*))
-      (pickup 'triforce)
-      '(the triforce has been made.))
-    '(you do not have the triforce-piece3.))))
+            (remove 'treasurekey-piece3 *objects*))
+      (pickup 'three-quarters-treasurekey)
+      '(the three-quarters-treasurekey has been made.))
+    '(you do not have the treasurekey-piece3.))))
+    
+;The combine-to-treasurekey is the third macro action for combining the first three pieces of the treasurekey, 
+; using half-triforce and treasurekey-piece4 to make into the whole triforce.
+(game-action combine-to-treasurekey three-quarters-treasurekey treasurekey-piece4 
+  (if(not(have 'three-quarters-treasurekey))
+      '(you do not have both the three-quarters-treasurekey and treasurekey-piece4)
+    (if (and(have 'treasurekey-piece4)(not *treasurekey*))
+    (progn 
+      (setf *treasurekey* 't)
+      (new-object treasurekey castle)
+      (setf *objects*
+            (remove 'three-quarters-treasurekey *objects*))
+      (setf *objects*
+            (remove 'treasurekey-piece4 *objects*))
+      (pickup 'treasurekey)
+      '(the treasurekey has been made.))
+    '(you do not have the treasurekey-piece4.))))
    
-; Holy-Power macro combines the sword and the cross into one object, the holy-sword.
+;holy-power macro combines the sword and the cross into one object, the holy-sword.
 (game-action holy-power sword cross cathedral
   (if(not(have 'sword))
       '(you do not have both the sword and the cross)
@@ -341,15 +350,33 @@
       (setf *objects*
             (remove 'cross *objects*))
       (pickup 'holy-sword)
-      '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat cursed monsters that roam these lands!))
+      '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat unholy powers!))
     '(you do not have the cross.))))
+    
+;enchantment-power combines the holy-sword with the spellbook to form the enchanted sword.
 
-; Fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+(game-action enchantment-power holy-sword spellbook catacombs
+  (if(not(have 'holy-sword))
+      '(you do not have both the holy-sword and the spellbook)
+    (if (and(have 'spellbook)(not *enchanted-sword*))
+    (progn 
+      (setf *enchanted-sword* 't)
+      (new-object enchanted-sword catacombs)
+      (setf *objects*
+            (remove 'holy-sword *objects*))
+      (setf *objects*
+            (remove 'spellbook *objects*))
+      (pickup 'enchanted-sword)
+      '(the enchanted-sword has been made. you may now defeat the dragon.))
+    '(you do not have the spellbook.))))
+
+
+;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
              (cond ((have 'sword) (new-object cross minotaur-lair))
-                                  (new-object triforce-piece1 minotaur-lair)
-                                  '(You have killed Killgore the minotaur and have found the first piece of the key.
-                                    You continue onward in your quest to defeat the monsters terrorizing these lands!))
+                                  (new-object treasurekey-piece1 minotaur-lair)
+                                  '(You killed Killgore the minotaur and find the first piece of the key
+                                  guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -357,10 +384,11 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a sword you are no match for the ferocious Minotaur. You lose! Try again!))))
 
-; Fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
+;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
 (game-action fight-necromancer holy-sword necromancer catacombs
-             (cond ((have 'holy-sword) (new-object triforce-piece2 catacombs)
-                                  '(You killed Nekro the necromancer and find the second piece of the key guarded by it. You continue forward in your quest to kill all the monsters!))
+             (cond ((have 'holy-sword) (new-object spellbook catacombs) 
+                                      (new-object treasurekey-piece2 catacombs)
+                                      '(You killed Nekro the necromancer and find the second piece of the key guarded by it. You continue forward in your quest to kill all the monsters!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -370,7 +398,7 @@
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-dragon enchanted-sword dragon dragons-den
-             (cond ((have 'enchanted-sword) (new-object triforce-piece4 dragons-den)
+             (cond ((have 'enchanted-sword) (new-object treasurekey-piece3 dragons-den)
                                   (new-object dragonhead dragons-den)
                                   '(You killed the  Blue Eyes White Dragon and find the last piece of the key
                                    guarded by it. The dragons head rolls on the floor. You killed all the monsters!                                   Now pick up the dragonhead and  go to the king to receive the glory!))
@@ -381,7 +409,7 @@
                     '(You fought valiantly but without a enchanted-sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
 (game-action speak-king dragonhead king castle
-             (cond ((have 'dragonhead) (new-object triforce-piece4 Mysterious-Island)
+             (cond ((have 'dragonhead) (new-object treasurekey-piece4 castle)
                                        (new-path castle north treasure-room north)
                                   '(The king congragulates you on slaying the dragon and
                                     opens up the treasure-room))
@@ -390,10 +418,10 @@
 
 
 
-;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-;(game-action unlock-treasure Triforce Treasure-Chest Castle
- ;            (cond ((have 'Triforce) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
-  ;                                              yours! You win!))
-   ;               (t                               
-    ;                '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
-     ;                 You should look around more to find them.))))
+;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the triforce, you win.
+;(game-action unlock-treasure treasurekey Treasure-Chest treasure-room
+             (cond ((have 'treasurekey) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
+                                                yours! You win!))
+                  (t                               
+                    '(Sorry, you haven't collected all the pieces of the treasurekey and combine it to make the treasurekey. 
+                      You should look around more to find them.))))
