@@ -8,13 +8,14 @@
                             You hear commotion outside.))
                         (village (you are in a small town.
                             There is panic among the villagers as monsters have appeared and people are missing!))
-                        (forest-trail (you are on the forest trail.
+                        (forest-trail (you are in the forest trail.
                             A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
-                        (Castle (You are in the Castle.
-                           The king has offered a reward to someone who can kill the monsters.))
-                        (catacombs (You are in the catacombs beneath the cathedral.
-                           Skulls align the walls and there is a foul smell in the air.))
-                        (dark-cave (you are in a dark cave.))
+                        (Castle (you are in the Castle.
+                           The king has offered a reward to someone who can kill the monsters. ))
+                        (catacombs (you are in the catacombs beneath the cathedral.
+                           Skulls align the walls and there is a foul smell in the air.  ))
+                        (dark-cave (you are in a dark cave. 
+                            ))
                         (labyrinth (You trip and fall down a hole!
                             You are trapped in the labyrinth! It is hard to see.))
                         (cathedral (you are in a cathedral.
@@ -23,12 +24,16 @@
                            You hear noises coming from a cave.))
                         (dragons-den (You are in the dragons den.
                             Bones align the floor.))
-                        (labyrinth2 (You are in a dark corridor.))
-                        (labyrinth3 (You are in a dark corridor.))
+                        (labyrinth2 (You are in a dark corridor.
+                                             ))
+                        (labyrinth3 (You are in a dark corridor.
+                                            ))
                         (labyrinth4 (You are in a dark corridor.
                             You hear growls coming from someplace deeper in the maze.))
-                        (hole (You have fell down a hole and died! Game Over.))
-                        (minotaur-lair (A large minotaur roars and charges at you.))))
+                        (hole (You have fell down a hole and died! Game Over.
+                                   ))
+                        (minotaur-lair (A large minotaur roars and charges at you. 
+                                        ))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
@@ -75,13 +80,11 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword chain frog torch triforce-piece1 triforce-piece2 triforce-piece3 triforce-piece4 triforce))
+(defparameter *objects* '(sword torch))
 
 ; This parameter gives where the objects are in the game.
 (defparameter *object-locations* '((sword house)
                                    (torch dark-cave)
-                                   ;(defaultitem2 area3)
-                                   ;(defaultitem3 area4)
                                    ))
 
 ; This function lists all the object to a specific location.
@@ -336,20 +339,20 @@
       '(the triforce has been made.))
     '(you do not have the triforce-piece4.))))
    
-;power-to-save macro combines the sword and the cross into one object, the horcrux-sword.
-(game-action power-to-save sword cross Rum-Island
+;holy-power macro combines the sword and the cross into one object, the holy-sword.
+(game-action holy-power sword cross minotaur-lair
   (if(not(have 'sword))
       '(you do not have both the sword and the cross)
-    (if (and(have 'cross)(not *horcrux-sword*))
+    (if (and(have 'cross)(not *holy-sword*))
     (progn 
-      (setf *horcrux-sword* 't)
-      (new-object horcrux-sword Rum-Island)
+      (setf *holy-sword* 't)
+      (new-object holy-sword minotaur-lair)
       (setf *objects*
             (remove 'sword *objects*))
       (setf *objects*
             (remove 'cross *objects*))
-      (pickup 'horcrux-sword)
-      '(the horcrux-sword has been made. you can now defeat Bloody Mary.))
+      (pickup 'holy-sword)
+      '(the holy-sword has been made. you may now defeat a necromancer.))
     '(you do not have the cross.))))
 
 ;i-have-the-power combines the horcrux sword with the grayskull to form the he-man-sword.
@@ -384,34 +387,30 @@
       '(the lightsaber has been made. you can now defeat One-Eyed Willy.))
     '(you do not have the skeletor-sword.))))
 
-;fight-Morgan uses the game-action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Morgan sword Captain-Morgan Rum-Island
-             (cond ((have 'sword) (new-object cross Rum-Island)
-                                  (new-object triforce-piece1 Rum-Island)
-                                  '(You killed Captain Morgan and find the first piece of the key
-                                  guarded by Captain Morgan. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+(game-action fight-Minotaur sword Killgore minotaur-lair 
+             (cond ((have 'sword) (new-object cross)
+                                  (new-object triforce-piece1 minotaur-lair)
+                                  '(You killed Killgore and find the first piece of the key
+                                  guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
                    ;(setf 'body nil)
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without a sword you are no match for Captain
-                        Morgan. You lose! Try again!))))
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a sword you are no match for the ferocious Minotaur. You lose! Try again!))))
 
-;fight-Mary uses the game-action macro to determine the outcome of the game, whether you can move on.
-(game-action fight-Mary horcrux-sword Bloody-Mary Blood-Island
-             (cond ((have 'horcrux-sword) (new-object grayskull Blood-Island)
-                                  (new-object triforce-piece2 Blood-Island)
-                                  '(You killed Bloody-Mary and find the second piece of the key
-                                  guarded by Bloody-Mary. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
+(game-action fight-Necromancer holy-sword Nekro catacombs
+             (cond ((have 'holy-sword) (new-object grayskull catacoumb)
+                                  (new-object triforce-piece2 catacoumb)
+                                  '(You killed Nekro and find the second piece of the key guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   ;(setf *objects-locations 'body nil)
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without a horcrux-sword you are no match for Bloody-Mary. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
 ;fight-Skeletor uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Skeletor he-man-sword Skeletor Skeleton-Island
@@ -420,27 +419,28 @@
                                   '(You killed Skeletor and find the third piece of the key
                                   guarded by Skeletor. You continue 
                                   forward in the search of the keys to unlock the treasure!))
-                  (t 
-                   (setf *location* 'pirate-lair)
+		  (t 
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without the he-man-sword you are no match for Skeletor. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Willy lightsaber One-Eyed-Willy Mystererious-Island
-             (cond ((have 'lightsaber) (new-object triforce-piece4 Mysterious-Island)
-                                  '(You killed One-Eyed-Willy and find the fourth piece of the key
-                                  guarded by One-Eyed-Willy. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+(game-action fight-Dragon lightsaber Blue-Eyes-White-Dragon dragons-den
+             (cond ((have 'lightsaber) (new-object triforce-piece4 dragons-den)
+                                  '(You killed Blue Eyes White Dragon and find the last piece of the key
+                                  guarded by it. You killed all the enemies. Now go to the king to receive the glory!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without the lightsaber you are no match for One-Eyed-Willy. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-;(game-action unlock-treasure treasurekey Treasure-Chest Hawaii
- ;            (cond ((have 'treasurekey) '(ARR!! You unlocked the Treasure-Chest. The plunder is
+;(game-action unlock-treasure Triforce Treasure-Chest Castle
+ ;            (cond ((have 'Triforce) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
   ;                                              yours! You win!))
    ;               (t                               
     ;                '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
