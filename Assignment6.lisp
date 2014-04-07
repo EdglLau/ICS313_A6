@@ -393,7 +393,7 @@
                    (setf *location* 'house)
                    (setf *objects* '(sword))
                    (setf *objects-locations* '((sword house)))
-                    '(You fought valiantly but without holy power you are no match for the deadly necromancer. You lose! Try again!))))
+                    '(You fought valiantly but without holy-sword you are no match for the deadly necromancer. You lose! Try again!))))
 
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
