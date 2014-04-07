@@ -232,7 +232,7 @@
         (pushnew '(,object ,location) *object-locations*))
        (t "Object already exists"))))
 
-; test: add new object pillow to living-room                                
+; Test: add new object pillow to living-room                                
 (new-object broom kitchen)
 
 ; Main macro for the new locations in game. We need to push a               
@@ -276,7 +276,7 @@
                  (cdr (assoc ',origin *edges*)) :test 'equal)))))
 
 ; Add paths to the new location
-;(new-path home bedroom east door west)
+; (new-path home bedroom east door west)
 (new-path attic outside outside window "unable")
 
 ; Macro to run different commands inside the game-repl
@@ -290,7 +290,7 @@
             '(i cant ,command like that.)))
           (pushnew ',command *allowed-commands*)))
 
-;the parameters give the combined object after the collected pieces are combined into one object.
+; The parameters give the combined object after the collected pieces are combined into one object.
 (defparameter *half-triforce* nil)
 (defparameter *triforce* nil)
 (defparameter *holy-sword* nil)
