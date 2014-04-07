@@ -38,36 +38,50 @@
    (cadr (assoc location nodes)))
 
 ; This parameter contains the paths that players can take to move between places.
-(defparameter *edges* '((house (village outside door))
-                        (village (Castle west path)
-                                 (house inside door)
-                                 (cathedral east path)
-                                 (forest-trail south path))
-                        (Castle (village east path))
-                        (cathedral (village west path)
-                                   (catacombs down hole))
-                        (forest-trail (village north path)
-                                      (mountain west path)
-                                      (dark-cave south path))
-                        (catacombs (cathedral up hole))
-                        (mountain (forest-trail east path)
-                                  (dragons-den up cave))
-                        (dragons-den (mountain outside passage))
-                        (dark-cave (forest-trail north path)
-                                   (labyrinth south broken-door))
-                        (labyrinth (labyrinth2 east path)
-                                   (hole south path)
-                                   (hole west path))
-                        (labyrinth2 (hole north path)
-                                    (hole east path)
-                                    (labyrinth3 south path))
-                        (labyrinth3 (hole east path)
-                                    (hole south path)
-                                    (labyrinth4 west path))
-                        (labyrinth4 (hole north path)
-                                    (hole west path)
-                                    (minotaur-lair south path))
-                        (minotaur-lair (forest-trail up secret-passage))))
+(defparameter *edges* '((house 
+				(village outside door))
+                        (village 
+                        	(Castle west path)
+                        	(house inside door)
+                                (cathedral east path)
+                                (forest-trail south path))
+                        (Castle 
+                        	(village east path))
+                        (cathedral 
+                        	(village west path)
+                                (catacombs down hole))
+                        (forest-trail 
+                        	(village north path)
+                                (mountain west path)
+                                (dark-cave south path))
+                        (catacombs 
+                        	(cathedral up hole))
+                        (mountain 
+                        	(forest-trail east path)
+                                (dragons-den up cave))
+                        (dragons-den 
+                        	(mountain outside passage))
+                        (dark-cave 
+                        	(forest-trail north path)
+                                (labyrinth south broken-door))
+                        (labyrinth 
+                        	(labyrinth2 east path)
+                                (hole south path)
+                                (hole west path))
+                        (labyrinth2 
+                        	(hole north path)
+                                (hole east path)
+                                (labyrinth3 south path))
+                        (labyrinth3 
+                        	(hole east path)
+                                (hole south path)
+                                (labyrinth4 west path))
+                        (labyrinth4 
+                        	(hole north path)
+                                (hole west path)
+                                (minotaur-lair south path))
+                        (minotaur-lair 
+                        	(forest-trail up secret-passage))))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
