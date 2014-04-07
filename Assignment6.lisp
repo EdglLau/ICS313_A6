@@ -8,14 +8,13 @@
                             You hear commotion outside.))
                         (village (you are in a small town.
                             There is panic among the villagers as monsters have appeared and people are missing!))
-                        (forest-trail (you are in the forest trail.
+                        (forest-trail (you are on the forest trail.
                             A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
-                        (Castle (you are in the Castle.
-                           The king has offered a reward to someone who can kill the monsters. ))
-                        (catacombs (you are in the catacombs beneath the cathedral.
-                           Skulls align the walls and there is a foul smell in the air.  ))
-                        (dark-cave (you are in a dark cave. 
-                            ))
+                        (Castle (You are in the Castle.
+                           The king has offered a reward to someone who can kill the monsters.))
+                        (catacombs (You are in the catacombs beneath the cathedral.
+                           Skulls align the walls and there is a foul smell in the air.))
+                        (dark-cave (you are in a dark cave.))
                         (labyrinth (You trip and fall down a hole!
                             You are trapped in the labyrinth! It is hard to see.))
                         (cathedral (you are in a cathedral.
@@ -24,16 +23,12 @@
                            You hear noises coming from a cave.))
                         (dragons-den (You are in the dragons den.
                             Bones align the floor.))
-                        (labyrinth2 (You are in a dark corridor.
-                                             ))
-                        (labyrinth3 (You are in a dark corridor.
-                                            ))
+                        (labyrinth2 (You are in a dark corridor.))
+                        (labyrinth3 (You are in a dark corridor.))
                         (labyrinth4 (You are in a dark corridor.
                             You hear growls coming from someplace deeper in the maze.))
-                        (hole (You have fell down a hole and died! Game Over.
-                                   ))
-                        (minotaur-lair (A large minotaur roars and charges at you. 
-                                        ))))
+                        (hole (You have fell down a hole and died! Game Over.))
+                        (minotaur-lair (A large minotaur roars and charges at you.))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
