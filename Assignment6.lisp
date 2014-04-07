@@ -275,7 +275,7 @@
                  (cdr (assoc ',origin *edges*)) :test 'equal)))))
 
 ; Add paths to the new location
-;(new-path home bedroom east door west)
+; (new-path home bedroom east door west)
 (new-path attic outside outside window "unable")
 
 ; Macro to run different commands inside the game-repl
@@ -289,13 +289,13 @@
             '(i cant ,command like that.)))
           (pushnew ',command *allowed-commands*)))
 
-;the parameters give the combined object after the collected pieces are combined into one object.
+; The parameters give the combined object after the collected pieces are combined into one object.
 (defparameter *half-triforce* nil)
 (defparameter *triforce* nil)
 (defparameter *holy-sword* nil)
 (defparameter *enchanted-sword* nil)
 
-;The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
+; The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
 (game-action combine-half triforce-piece1 triforce-piece2 minotaur-lair
   (if(not(have 'triforce-piece1))
       '(you do not have both the triforce-piece1 and triforce-piece2)
@@ -311,7 +311,7 @@
       '(the half-triforce has been made.))
     '(you do not have the triforce-piece2.))))
 
-;The combine-to-triforce is the second macro action for combining the first three pieces of the treasurekey, 
+; The combine-to-triforce is the second macro action for combining the first three pieces of the treasurekey, 
 ; using half-triforce and triforce-piece3 to make into the whole triforce.
 (game-action combine-to-triforce half-triforce triforce-piece3 
   (if(not(have 'half-triforce))
@@ -328,7 +328,7 @@
       '(the triforce has been made.))
     '(you do not have the triforce-piece3.))))
    
-;holy-power macro combines the sword and the cross into one object, the holy-sword.
+; Holy-Power macro combines the sword and the cross into one object, the holy-sword.
 (game-action holy-power sword cross cathedral
   (if(not(have 'sword))
       '(you do not have both the sword and the cross)
@@ -341,15 +341,15 @@
       (setf *objects*
             (remove 'cross *objects*))
       (pickup 'holy-sword)
-      '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat unholy powers!))
+      '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat cursed monsters that roam these lands!))
     '(you do not have the cross.))))
 
-;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+; Fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
              (cond ((have 'sword) (new-object cross minotaur-lair))
                                   (new-object triforce-piece1 minotaur-lair)
-                                  '(You killed Killgore the minotaur and find the first piece of the key
-                                  guarded by it. You continue forward in your quest to fight all enemies!))
+                                  '(You have killed Killgore the minotaur and have found the first piece of the key.
+                                    You continue onward in your quest to defeat the monsters terrorizing these lands!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -357,7 +357,7 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a sword you are no match for the ferocious Minotaur. You lose! Try again!))))
 
-;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
+; Fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
 (game-action fight-necromancer holy-sword necromancer catacombs
              (cond ((have 'holy-sword) (new-object triforce-piece2 catacombs)
                                   '(You killed Nekro the necromancer and find the second piece of the key guarded by it. You continue forward in your quest to kill all the monsters!))
