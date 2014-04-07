@@ -9,7 +9,7 @@
                         (village (you are in a small town.
                             There is panic among the villagers as monsters have appeared in the area! A mysterious man tells you east south west south.))
                         (forest-trail (you are on the forest trail.
-                            A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
+                            A worn sign says there is a village to the north a cave to the south and a mountain to the west.))
                         (Castle (You are in the Castle.
                            The king has offered a reward to someone who can kill the monsters and find his treasure key. ))
                         (treasure-room (You are in the treasure room.
@@ -25,7 +25,7 @@
                         (mountain (you are on a tall mountain.
                            You hear noises coming from a cave.))
                         (dragons-den (You are in the dragons den.
-                            Bones align the floor.))
+                            Bones align the floor. The dragon awaits you here...))
                         (labyrinth2 (You are in a dark corridor.
                                              ))
                         (labyrinth3 (You are in a dark corridor.
@@ -401,26 +401,24 @@
 
 ;light uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action light tinder torch dark-cave
-             (cond ((have 'tinder) (new-object torch catacombs)
+             (cond ((have 'tinder) (new-object torch dark-cave)
                                    (new-path dark-cave labyrinth south broken-door)
                                   '(You lit the torch and can now see. There is a broken door in front of you heading south.))
                   (t 
                     '(You have nothing to light the torch with.))))
 
-
 ;speak-king uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action speak-king dragonhead king castle
              (cond ((have 'dragonhead) (new-object treasurekey-piece4 castle)
-                                       (new-path castle treasure-room gate north)
+                                       (new-path castle treasure-room north gate)
                                   '(The king congragulates you on slaying the dragon and
                                     gives you the last piece to his treasure room key.))
                   (t 
                     '(The king says there is a reward for anyone brave enough to kill the monsters terrorizing the village.))))
 
 
-
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-(game-action unlock-treasure treasurekey treasure-chest Castle
-             (cond ((have 'treasurekey) '(The king is pleased that you You unlocked the Treasure-Chest. The treasure is yours! You win!))
+(game-action unlock-treasure treasurekey treasure-chest treasure-room
+             (cond ((have 'treasurekey) '(You opened the treasure chest and found the treasure! You win! ))
                  (t                               
-                    '(Sorry, you haven't collected all the pieces of the treasure-key and combined it to make the treasure-key. You should look around more to find them.))))
+                    '(Sorry you havent collected all the pieces of the treasure-key and combined it to make the treasure-key. You should look around more to find them.))))
