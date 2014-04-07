@@ -80,13 +80,11 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword chain frog torch triforce-piece1 triforce-piece2 triforce-piece3 triforce-piece4 triforce))
+(defparameter *objects* '(sword torch))
 
 ; This parameter gives where the objects are in the game.
 (defparameter *object-locations* '((sword house)
                                    (torch dark-cave)
-                                   ;(defaultitem2 area3)
-                                   ;(defaultitem3 area4)
                                    ))
 
 ; This function lists all the object to a specific location.
@@ -285,14 +283,12 @@
 
 ;the parameters give the combined object after the collected pieces are combined into one object.
 (defparameter *half-triforce* nil)
-(defparameter *three-quarters-triforce* nil)
 (defparameter *triforce* nil)
-(defparameter *horcrux-sword* nil)
-(defparameter *He-Man-Sword* nil)
-(defparameter *lightsaber* nil)
+(defparameter *holy-sword* nil)
+(defparameter *enchanted-sword* nil)
 
 ;The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
-(game-action combine-half triforce-piece1 triforce-piece2 Blood-Island
+(game-action combine-half triforce-piece1 triforce-piece2 minotaur-lair
   (if(not(have 'triforce-piece1))
       '(you do not have both the triforce-piece1 and triforce-piece2)
     (if (and(have 'triforce-piece2)(not *half-triforce*))
@@ -307,92 +303,60 @@
       '(the half-triforce has been made.))
     '(you do not have the triforce-piece2.))))
 
-;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
-; using half-triforce and triforce-piece3
-(game-action combine-three-quarters half-triforce triforce-piece3 Skeleton-Island
+;The combine-to-triforce is the second macro action for combining the first three pieces of the treasurekey, 
+; using half-triforce and triforce-piece3 to make into the whole triforce.
+(game-action combine-to-triforce half-triforce triforce-piece3 
   (if(not(have 'half-triforce))
       '(you do not have both the half-triforce and triforce-piece3)
-    (if (and(have 'triforce-piece3)(not *three-quarters-triforce*))
+    (if (and(have 'triforce-piece3)(not *triforce*))
     (progn 
-      (setf *three-quarters-triforce* 't)
-      (new-object three-quarters-triforce Skeleton-Island)
+      (setf *triforce* 't)
+      (new-object triforce dragons-den)
       (setf *objects*
             (remove 'half-triforce *objects*))
       (setf *objects*
             (remove 'triforce-piece3 *objects*))
-      (pickup 'three-quarters-triforce)
-      '(the three-quarters-triforce has been made.))
-    '(you do not have the triforce-piece3.))))
-
-;The combine is the third macro action for combining the first three pieces of the treasurekey, 
-; using three-quarters-triforce and triforce-piece4
-(game-action combine three-quarters-triforce triforce-piece4 Mysterious-Island
-  (if(not(have 'three-quarters-triforce))
-      '(you do not have both the three-quarters-triforce and triforce-piece4)
-    (if (and(have 'triforce-piece4)(not *triforce*))
-    (progn 
-      (setf *triforce* 't)
-      (new-object triforce Mysterious-Island)
-      (setf *objects*
-            (remove 'three-quarters-triforce *objects*))
-      (setf *objects*
-            (remove 'triforce-piece4 *objects*))
       (pickup 'triforce)
       '(the triforce has been made.))
-    '(you do not have the triforce-piece4.))))
-   
-;power-to-save macro combines the sword and the cross into one object, the horcrux-sword.
-(game-action power-to-save sword cross Rum-Island
+    '(you do not have the triforce-piece3.))))
+
+;holy-power macro combines the sword and the cross into one object, the holy-sword.
+(game-action holy-power sword cross minotaur-lair
   (if(not(have 'sword))
       '(you do not have both the sword and the cross)
-    (if (and(have 'cross)(not *horcrux-sword*))
+    (if (and(have 'cross)(not *holy-sword*))
     (progn 
-      (setf *horcrux-sword* 't)
-      (new-object horcrux-sword Rum-Island)
+      (setf *holy-sword* 't)
+      (new-object holy-sword minotaur-lair)
       (setf *objects*
             (remove 'sword *objects*))
       (setf *objects*
             (remove 'cross *objects*))
-      (pickup 'horcrux-sword)
-      '(the horcrux-sword has been made. you can now defeat Bloody Mary.))
+      (pickup 'holy-sword)
+      '(the holy-sword has been made. you may now defeat a necromancer.))
     '(you do not have the cross.))))
 
-;i-have-the-power combines the horcrux sword with the grayskull to form the he-man-sword.
-(game-action i-have-the-power horcrux-sword grayskull Blood-Island
-  (if(not(have 'horcrux-sword))
-      '(you do not have both the horcrux-sword and the grayskull)
-    (if (and(have 'grayskull)(not *he-man-sword*))
-    (progn 
-      (setf *he-man-sword* 't)
-      (new-object he-man-sword Blood-Island)
-      (setf *objects*
-            (remove 'horcrux-sword *objects*))
-      (setf *objects*
-            (remove 'grayskull *objects*))
-      (pickup 'he-man-sword)
-      '(the he-man-sword has been made. you can now defeat Skeletor.))
-    '(you do not have the grayskull.))))
+;enchantment-power combines the holy-sword with the spellbook to form the enchanted sword.
 
-;jedi-power combines the he-man-sword with the skeletor-sword to make the lightsaber
-(game-action jedi-power he-man-sword skeletor-sword Skeleton-Island
-  (if(not(have 'he-man-sword))
-      '(you do not have both the he-man-sword and the skeletor-sword)
-    (if (and(have 'skeletor-sword)(not *lightsaber*))
+(game-action enchantment-power holy-sword spellbook catacombs
+  (if(not(have 'holy-sword))
+      '(you do not have both the holy-sword and the spellbook)
+    (if (and(have 'grayskull)(not *enchanted-sword*))
     (progn 
-      (setf *lightsaber* 't)
-      (new-object lightsaber Skeleton-Island)
+      (setf *enchanted-sword* 't)
+      (new-object enchanted-sword catacombs)
       (setf *objects*
-            (remove 'he-man-sword *objects*))
+            (remove 'holy-sword *objects*))
       (setf *objects*
-            (remove 'skeletor-sword *objects*))
-      (pickup 'lightsaber)
-      '(the lightsaber has been made. you can now defeat One-Eyed Willy.))
-    '(you do not have the skeletor-sword.))))
+            (remove 'spellbook *objects*))
+      (pickup 'enchanted-sword)
+      '(the enchanted-sword has been made. you may now defeat the dragon.))
+    '(you do not have the spellbook.))))
 
 ;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Minotaur sword Killgore Minotaur-Lair 
-             (cond ((have 'sword) (new-object cross )
-                                  (new-object triforce-piece1 Minotaur-Lair)
+(game-action fight-Minotaur sword Killgore minotaur-lair 
+             (cond ((have 'sword) (new-object cross minotaur-lair)
+                                  (new-object triforce-piece1 minotaur-lair)
                                   '(You killed Killgore and find the first piece of the key
                                   guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
@@ -404,8 +368,8 @@
 
 ;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
 (game-action fight-Necromancer holy-sword Nekro catacombs
-             (cond ((have 'holy-sword) (new-object grayskull catacoumb)
-                                  (new-object triforce-piece2 catacoumb)
+             (cond ((have 'holy-sword) (new-object spellbook catacombs)
+                                  (new-object triforce-piece2 catacombs)
                                   '(You killed Nekro and find the second piece of the key guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
                    (setf *location* 'house)
@@ -414,23 +378,10 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
-;fight-Skeletor uses the game-action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Skeletor he-man-sword Skeletor Skeleton-Island
-             (cond ((have 'he-man-sword) (new-object skeletor-sword Skeleton-Island)
-                                  (new-object triforce-piece3 Skeleton-Island)
-                                  '(You killed Skeletor and find the third piece of the key
-                                  guarded by Skeletor. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
-		  (t 
-                   (setf *location* 'house)
-                   (setf *objects* '(sword))
-                   ;(setf 'body nil)
-                   (setf *objects-locations* '((sword house)))
-                    '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Dragon lightsaber Blue-Eyes-White-Dragon dragons-den
-             (cond ((have 'lightsaber) (new-object triforce-piece4 dragons-den)
+(game-action fight-Dragon enchanted-sword Blue-Eyes-White-Dragon dragons-den
+             (cond ((have 'enchanted-sword) (new-object triforce-piece3 dragons-den)
                                   '(You killed Blue Eyes White Dragon and find the last piece of the key
                                   guarded by it. You killed all the enemies. Now go to the king to receive the glory!))
                   (t 
@@ -438,7 +389,7 @@
                    (setf *objects* '(sword))
                    ;(setf 'body nil)
                    (setf *objects-locations* '((sword house)))
-                    '(You fought valiantly but without a holy sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
+                    '(You fought valiantly but without a enchanted sword, you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
 ;(game-action unlock-treasure Triforce Treasure-Chest Castle
