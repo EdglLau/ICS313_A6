@@ -379,7 +379,7 @@
 (game-action fight-Necromancer holy-sword Nekro catacombs
              (cond ((have 'holy-sword) (new-object spellbook catacombs)
                                   (new-object triforce-piece2 catacombs)
-                                  '(You killed Nekro and find the second piece of the key guarded by it. You continue forward in your quest to fight all enemies!))
+                                  '(You have killed Nekro and have found the second piece of the key. You continue onward in your quest to defeat the monsters terrorizing these lands!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
