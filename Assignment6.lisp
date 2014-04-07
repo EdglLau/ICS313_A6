@@ -4,51 +4,72 @@
 ;;; File: assignment6.lisp
 
 ; This parameter shows the description to each place.
-(defparameter *nodes* '((home (you are currently at home.
-                            Default text.))
-                        (town (you are in a small, quiet town.
-                            there are some nice villagers greeting you nicely and there are some thiefs stealing their possesion.))
-                        (graveyard (you are in the graveyard next to town. 
-                            Default text))
-                        (catacombs (you are in the catacombs underneath the town.
-                            Default text.))
-                        (forest (you are in a dreary forest outside of town. 
-                            Default text))
-                        (cave (you are in a dark cave. 
-                            Default text))
-                        (lake (you have come upon a lake. 
-                            there is a boat.))
-                        (island (you are on an island.
-                            Default text))
-                        (desert (you are in a desert. 
-                            Default text))
-                        (oasis (you are in an oasis.
-                            Default text))))
+(defparameter *nodes* '((house (you are currently at your house.
+                            You hear commotion outside.))
+                        (village (you are in a small town.
+                            There is panic among the villagers as monsters have appeared and people are missing!))
+                        (forest-trail (you are in the forest trail.
+                            A worn sign says there is a village to the north, a cave to the south, and a mountain to the west.))
+                        (Castle (you are in the Castle.
+                           The king has offered a reward to someone who can kill the monsters. ))
+                        (catacombs (you are in the catacombs beneath the cathedral.
+                           Skulls align the walls and there is a foul smell in the air.  ))
+                        (dark-cave (you are in a dark cave. 
+                            ))
+                        (labyrinth (You trip and fall down a hole!
+                            You are trapped in the labyrinth! It is hard to see.))
+                        (cathedral (you are in a cathedral.
+                           People around you are praying for their safety. ))
+                        (mountain (you are on a tall mountain.
+                           You hear noises coming from a cave.))
+                        (dragons-den (You are in the dragons den.
+                            Bones align the floor.))
+                        (labyrinth2 (You are in a dark corridor.
+                                             ))
+                        (labyrinth3 (You are in a dark corridor.
+                                            ))
+                        (labyrinth4 (You are in a dark corridor.
+                            You hear growls coming from someplace deeper in the maze.))
+                        (hole (You have fell down a hole and died! Game Over.
+                                   ))
+                        (minotaur-lair (A large minotaur roars and charges at you. 
+                                        ))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
    (cadr (assoc location nodes)))
 
 ; This parameter contains the paths that players can take to move between places.
-(defparameter *edges* '((home (town outside door))
-                        (town (home home door)
-                              (graveyard east path)
-                              (forest south path))
-                        (graveyard 
-                              (town west path)
-                       	      (catacombs down hole))
-                        (catacombs 
-                              (graveyard outside hole))
-                        (forest 
-                              (town north path)
-                              (cave underground path)
-                              (lake east path)
-                              (desert south path)) 
-                        (area6 ())
-                        (area7 ())
-                        (area8 ())
-                        (area9 ())
-                        (area10 ())))
+(defparameter *edges* '((house (village outside door))
+                        (village (Castle west path)
+                                 (house inside door)
+                                 (cathedral east path)
+                                 (forest-trail south path))
+                        (Castle (village east path))
+                        (cathedral (village west path)
+                                   (catacombs down hole))
+                        (forest-trail (village north path)
+                                      (mountain west path)
+                                      (dark-cave south path))
+                        (catacombs (cathedral up hole))
+                        (mountain (forest-trail east path)
+                                  (dragons-den up cave))
+                        (dragons-den (mountain outside passage))
+                        (dark-cave (forest-trail north path)
+                                   (labyrinth south broken-door))
+                        (labyrinth (labyrinth2 east path)
+                                   (hole south path)
+                                   (hole west path))
+                        (labyrinth2 (hole north path)
+                                    (hole east path)
+                                    (labyrinth3 south path))
+                        (labyrinth3 (hole east path)
+                                    (hole south path)
+                                    (labyrinth4 west path))
+                        (labyrinth4 (hole north path)
+                                    (hole south path)
+                                    (minotaur-lair south path))
+                        (minotaur-lair (forest-trail up secret-passage))))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
@@ -59,11 +80,11 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword chain frog triforce-piece1 triforce-piece2 triforce-piece3 triforce-piece4 triforce))
+(defparameter *objects* '(sword chain frog torch triforce-piece1 triforce-piece2 triforce-piece3 triforce-piece4 triforce))
 
 ; This parameter gives where the objects are in the game.
-(defparameter *object-locations* '((sword home)
-                                   ;(defaultitem1 area3)
+(defparameter *object-locations* '((sword house)
+                                   (torch dark-cave)
                                    ;(defaultitem2 area3)
                                    ;(defaultitem3 area4)
                                    ))
@@ -81,7 +102,7 @@
       (apply #'append (mapcar #'describe-obj (objects-at loc objs obj-loc)))))
 
 ; This parameter gives the starting location for this game.
-(defparameter *location* 'home)
+(defparameter *location* 'house)
 
 ; This function allows users to see where they are in this wizard's world.
 (defun look ()
@@ -368,34 +389,30 @@
       '(the lightsaber has been made. you can now defeat One-Eyed Willy.))
     '(you do not have the skeletor-sword.))))
 
-;fight-Morgan uses the game-action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Morgan sword Captain-Morgan Rum-Island
-             (cond ((have 'sword) (new-object cross Rum-Island)
-                                  (new-object triforce-piece1 Rum-Island)
-                                  '(You killed Captain Morgan and find the first piece of the key
-                                  guarded by Captain Morgan. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+(game-action fight-Minotaur sword Killgore Minotaur-Lair 
+             (cond ((have 'sword) (new-object cross )
+                                  (new-object triforce-piece1 Minotaur-Lair)
+                                  '(You killed Killgore and find the first piece of the key
+                                  guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
                    ;(setf 'body nil)
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without a sword you are no match for Captain
-                        Morgan. You lose! Try again!))))
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a sword you are no match for the ferocious Minotaur. You lose! Try again!))))
 
-;fight-Mary uses the game-action macro to determine the outcome of the game, whether you can move on.
-(game-action fight-Mary horcrux-sword Bloody-Mary Blood-Island
-             (cond ((have 'horcrux-sword) (new-object grayskull Blood-Island)
-                                  (new-object triforce-piece2 Blood-Island)
-                                  '(You killed Bloody-Mary and find the second piece of the key
-                                  guarded by Bloody-Mary. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
+(game-action fight-Necromancer holy-sword Nekro catacombs
+             (cond ((have 'holy-sword) (new-object grayskull catacoumb)
+                                  (new-object triforce-piece2 catacoumb)
+                                  '(You killed Nekro and find the second piece of the key guarded by it. You continue forward in your quest to fight all enemies!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   ;(setf *objects-locations 'body nil)
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without a horcrux-sword you are no match for Bloody-Mary. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
 ;fight-Skeletor uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Skeletor he-man-sword Skeletor Skeleton-Island
@@ -404,27 +421,28 @@
                                   '(You killed Skeletor and find the third piece of the key
                                   guarded by Skeletor. You continue 
                                   forward in the search of the keys to unlock the treasure!))
-                  (t 
-                   (setf *location* 'pirate-lair)
+		  (t 
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without the he-man-sword you are no match for Skeletor. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the deadly Nekro. You lose! Try again!))))
 
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
-(game-action fight-Willy lightsaber One-Eyed-Willy Mystererious-Island
-             (cond ((have 'lightsaber) (new-object triforce-piece4 Mysterious-Island)
-                                  '(You killed One-Eyed-Willy and find the fourth piece of the key
-                                  guarded by One-Eyed-Willy. You continue 
-                                  forward in the search of the keys to unlock the treasure!))
+(game-action fight-Dragon lightsaber Blue-Eyes-White-Dragon dragons-den
+             (cond ((have 'lightsaber) (new-object triforce-piece4 dragons-den)
+                                  '(You killed Blue Eyes White Dragon and find the last piece of the key
+                                  guarded by it. You killed all the enemies. Now go to the king to receive the glory!))
                   (t 
-                   (setf *location* 'pirate-lair)
+                   (setf *location* 'house)
                    (setf *objects* '(sword))
-                   (setf *objects-locations* '((sword pirate-lair)))
-                    '(You fought valiantly but without the lightsaber you are no match for One-Eyed-Willy. You lose! Try again!))))
+                   ;(setf 'body nil)
+                   (setf *objects-locations* '((sword house)))
+                    '(You fought valiantly but without a holy sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
-;(game-action unlock-treasure treasurekey Treasure-Chest Hawaii
- ;            (cond ((have 'treasurekey) '(ARR!! You unlocked the Treasure-Chest. The plunder is
+;(game-action unlock-treasure Triforce Treasure-Chest Castle
+ ;            (cond ((have 'Triforce) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
   ;                                              yours! You win!))
    ;               (t                               
     ;                '(Sorry, you haven't collected all the pieces of the treasure-key and combine it to make the treasure-key. 
