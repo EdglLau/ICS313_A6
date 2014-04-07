@@ -391,8 +391,8 @@
 ;fight-Willy uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-Dragon enchanted-sword Blue-Eyes-White-Dragon dragons-den
              (cond ((have 'enchanted-sword) (new-object triforce-piece3 dragons-den)
-                                  '(You killed Blue Eyes White Dragon and find the last piece of the key
-                                  guarded by it. You killed all the enemies. Now go to the king to receive the glory!))
+                                  '(You have killed Blue Eyes White Dragon and have found the last piece of the key.
+                                    The monsters terrorizing the kingdom have all been slain. Hero, go to the king to receive righteous glory!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
