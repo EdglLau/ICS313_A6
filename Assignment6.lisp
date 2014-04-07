@@ -373,7 +373,7 @@
 
 ;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
-             (cond ((have 'sword) (new-object cross minotaur-lair))
+             (cond ((have 'sword) (new-object cross minotaur-lair) 
                                   (new-object treasurekey-piece1 minotaur-lair)
                                   '(You killed Killgore the minotaur and find the first piece of the key
                                   guarded by it. You continue forward in your quest to fight all enemies!))
@@ -419,9 +419,9 @@
 
 
 ;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the triforce, you win.
-;(game-action unlock-treasure treasurekey Treasure-Chest treasure-room
+ (game-action unlock-treasure treasurekey Treasure-Chest treasure-room
              (cond ((have 'treasurekey) '(The king is pleased that you You unlocked the Treasure-Chest. The plunder is
                                                 yours! You win!))
                   (t                               
-                    '(Sorry, you haven't collected all the pieces of the treasurekey and combine it to make the treasurekey. 
+                    '(Sorry, you haven't collected all the pieces of the treasurekey and combined it to make the treasurekey. 
                       You should look around more to find them.))))
