@@ -16,10 +16,10 @@
                            Congragulations! You win!))
                         (catacombs (You are in the catacombs beneath the cathedral.
                            Skulls align the walls and there is a foul smell in the air. You see a necromancer using unholy powers to summon zombies.))
-                        (dark-cave (you are in a dark cave. 
+                        (dark-cave (you are in a dark cave. You can barely see anything except for a torch on the wall. 
                             ))
                         (labyrinth (You trip and fall down a hole!
-                            You are trapped in the labyrinth! It is hard to see.))
+                            You are trapped in the labyrinth! There are traps everywhere.))
                         (cathedral (you are in a cathedral.
                            People around you are praying for their safety. ))
                         (mountain (you are on a tall mountain.
@@ -58,8 +58,7 @@
                         (mountain (forest-trail east path)
                                   (dragons-den up cave))
                         (dragons-den (mountain outside passage))
-                        (dark-cave (forest-trail north path)
-                                   (labyrinth south broken-door))
+                        (dark-cave (forest-trail north path))
                         (labyrinth (labyrinth2 east path)
                                    (hole south path)
                                    (hole west path))
@@ -72,7 +71,7 @@
                         (labyrinth4 (hole north path)
                                     (hole west path)
                                     (minotaur-lair south path))
-                        (minotaur-lair (forest-trail up secret-passage))))
+                        (minotaur-lair )))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
@@ -83,11 +82,11 @@
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
 
 ; This parameter defines the object to this game.
-(defparameter *objects* '(sword torch))
+(defparameter *objects* '(sword tinder))
 
 ; This parameter gives where the objects are in the game.
 (defparameter *object-locations* '((sword house)
-                                   (torch dark-cave)
+                                   (tinder village)
                                    ))
 
 ; This function lists all the object to a specific location.
@@ -357,10 +356,11 @@
 
 ;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
-             (cond ((have 'sword) (new-object cross minotaur-lair))
+             (cond ((have 'sword) (new-object cross minotaur-lair)
                                   (new-object triforce-piece1 minotaur-lair)
+                                  (new-path minotaur-lair forest-trail up secret-path)
                                   '(You killed Killgore the minotaur and find the first piece of the key
-                                  guarded by it. You continue forward in your quest to fight all enemies!))
+                                  guarded by it. It drops the cross on the floor. A path mysteriously opens up ahead.))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -391,9 +391,18 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a enchanted-sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
+(game-action light tinder torch dark-cave
+             (cond ((have 'tinder) (new-object torch catacombs)
+                                   (new-path dark-cave labyrinth south broken-door)
+                                  '(You lit the torch and can now see. There is a broken door in front of you heading south.))
+                  (t 
+                    '(You have nothing to light the torch with.))))
+
+
+
 (game-action speak-king dragonhead king castle
              (cond ((have 'dragonhead) (new-object triforce-piece4 Mysterious-Island)
-                                       (new-path castle north treasure-room north)
+                                       (new-path castle treasure-room gate north)
                                   '(The king congragulates you on slaying the dragon and
                                     opens up the treasure-room))
                   (t 
