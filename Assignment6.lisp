@@ -282,14 +282,12 @@
 
 ;the parameters give the combined object after the collected pieces are combined into one object.
 (defparameter *half-triforce* nil)
-(defparameter *three-quarters-triforce* nil)
 (defparameter *triforce* nil)
-(defparameter *horcrux-sword* nil)
-(defparameter *He-Man-Sword* nil)
-(defparameter *lightsaber* nil)
+(defparameter *holy-sword* nil)
+(defparameter *enchanted-sword* nil)
 
 ;The combine-half is the first macro action for combining the first half of the triforce, using triforce-piece1 and triforce-piece2
-(game-action combine-half triforce-piece1 triforce-piece2 Blood-Island
+(game-action combine-half triforce-piece1 triforce-piece2 minotaur-lair
   (if(not(have 'triforce-piece1))
       '(you do not have both the triforce-piece1 and triforce-piece2)
     (if (and(have 'triforce-piece2)(not *half-triforce*))
@@ -304,39 +302,22 @@
       '(the half-triforce has been made.))
     '(you do not have the triforce-piece2.))))
 
-;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
-; using half-triforce and triforce-piece3
-(game-action combine-three-quarters half-triforce triforce-piece3 Skeleton-Island
+;The combine-to-triforce is the second macro action for combining the first three pieces of the treasurekey, 
+; using half-triforce and triforce-piece3 to make into the whole triforce.
+(game-action combine-to-triforce half-triforce triforce-piece3 
   (if(not(have 'half-triforce))
       '(you do not have both the half-triforce and triforce-piece3)
-    (if (and(have 'triforce-piece3)(not *three-quarters-triforce*))
+    (if (and(have 'triforce-piece3)(not *triforce*))
     (progn 
-      (setf *three-quarters-triforce* 't)
-      (new-object three-quarters-triforce Skeleton-Island)
+      (setf *triforce* 't)
+      (new-object triforce dragons-den)
       (setf *objects*
             (remove 'half-triforce *objects*))
       (setf *objects*
             (remove 'triforce-piece3 *objects*))
-      (pickup 'three-quarters-triforce)
-      '(the three-quarters-triforce has been made.))
-    '(you do not have the triforce-piece3.))))
-
-;The combine is the third macro action for combining the first three pieces of the treasurekey, 
-; using three-quarters-triforce and triforce-piece4
-(game-action combine three-quarters-triforce triforce-piece4 Mysterious-Island
-  (if(not(have 'three-quarters-triforce))
-      '(you do not have both the three-quarters-triforce and triforce-piece4)
-    (if (and(have 'triforce-piece4)(not *triforce*))
-    (progn 
-      (setf *triforce* 't)
-      (new-object triforce Mysterious-Island)
-      (setf *objects*
-            (remove 'three-quarters-triforce *objects*))
-      (setf *objects*
-            (remove 'triforce-piece4 *objects*))
       (pickup 'triforce)
       '(the triforce has been made.))
-    '(you do not have the triforce-piece4.))))
+    '(you do not have the triforce-piece3.))))
    
 ;holy-power macro combines the sword and the cross into one object, the holy-sword.
 (game-action holy-power sword cross cathedral
@@ -353,7 +334,6 @@
       (pickup 'holy-sword)
       '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat unholy powers!))
     '(you do not have the cross.))))
-
 
 ;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
