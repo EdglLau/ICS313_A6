@@ -401,7 +401,7 @@
              (cond ((have 'enchanted-sword) (new-object treasurekey-piece3 dragons-den)
                                   (new-object dragonhead dragons-den)
                                   '(You killed the  Blue Eyes White Dragon and find the last piece of the key
-                                   guarded by it. The dragons head rolls on the floor. You killed all the monsters!                                   Now pick up the dragonhead and  go to the king to receive the glory!))
+                                   guarded by it. The dragons head rolls on the floor. You killed all the monsters! Now pick up the dragonhead and go to the king to receive the glory!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
