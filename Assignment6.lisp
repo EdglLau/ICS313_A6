@@ -176,7 +176,17 @@
         (unless (eq (car cmd) 'quit)
             (game-print (game-eval cmd))
             (game-repl))))
-
+            
+;game-start provides a start function that will initialize the game with each start to the initial location and objects and then makes a 
+; call to the game-repl function.
+(defun game-start ()
+  (setf *location* 'house)
+  (setf *objects* '(sword))
+  (setf *objects-locations* '((sword house)))
+  (princ "Default Text. Please add whatever.")
+  (terpri)
+  (game-repl))
+  
 ; This function forces users to put parentheses around their commands and
 ; quotes in front of any function commands.
 (defun game-read ()
