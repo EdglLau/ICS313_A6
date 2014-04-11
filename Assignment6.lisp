@@ -186,7 +186,7 @@
 
 
 ;;;=========================R-E-P-L=======================;;;
-;  Wizard's World part 2
+; Wizard's World part 2
 
 ; This function allows the user to play the game. If user types quit, the game is over.
 (defun game-repl ()
@@ -195,13 +195,13 @@
             (game-print (game-eval cmd))
             (game-repl))))
             
-;game-start provides a start function that will initialize the game with each start to the initial location and objects and then makes a 
+; game-start provides a start function that will initialize the game with each start to the initial location and objects and then makes a 
 ; call to the game-repl function.
 (defun game-start ()
   (setf *location* 'house)
   (setf *objects* '(sword))
   (setf *objects-locations* '((sword house)))
-  (princ "Default Text. Please add whatever.")
+  (princ "Welcome hero! The Kingdom of Lastern needs your dire help! Take up arms and protect the Kingdom!")
   (terpri)
   (game-repl))
   
@@ -239,6 +239,7 @@
 (defun game-print (lst)
     (princ (coerce (tweak-text (coerce (string-trim "() " (prin1-to-string lst)) 'list) t nil) 'string))
     (fresh-line))
+
 ;;;==========================Macros===============================;;;           
 
 ; Macro for new objects, need to push to *objects* and                      
@@ -307,7 +308,7 @@
 (defparameter *holy-sword* nil)
 (defparameter *enchanted-sword* nil)
 
-;The combine-half is the first macro action for combining the first half of the treasurekey, using treasurekey-piece1 and treasurekey-piece2
+; The combine-half is the first macro action for combining the first half of the treasurekey, using treasurekey-piece1 and treasurekey-piece2
 (game-action combine-half treasurekey-piece1 treasurekey-piece2 catacombs
   (if(not(have 'treasurekey-piece1))
       '(you do not have both the treasurekey-piece1 and treasurekey-piece2)
@@ -323,7 +324,7 @@
       '(the half-treasurekey has been made.))
     '(you do not have the treasurekey-piece2.))))
 
-;The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
+; The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
 ; using half-treasurekey and treasurekey-piece3
 (game-action combine-three-quarters half-treasurekey treasurekey-piece3 dragons-den
   (if(not(have 'half-treasurekey))
@@ -340,7 +341,7 @@
       '(the three-quarters-treasurekey has been made.))
     '(you do not have the treasurekey-piece3.))))
 
-;The combine is the third macro action for combining the first three pieces of the treasurekey, 
+; The combine is the third macro action for combining the first three pieces of the treasurekey, 
 ; using three-quarters-treasurekey and treasurekey-piece4
 (game-action combine three-quarters-treasurekey treasurekey-piece4 castle
   (if(not(have 'three-quarters-treasurekey))
@@ -357,7 +358,7 @@
       '(the treasurekey has been made.))
     '(you do not have the treasurekey-piece4.))))
    
-;holy-power macro combines the sword and the cross into one object, the holy-sword.
+; holy-power macro combines the sword and the cross into one object, the holy-sword.
 (game-action holy-power sword cross cathedral
   (if(not(have 'sword))
       '(you do not have both the sword and the cross)
@@ -373,7 +374,7 @@
       '(You raise the sword and cross in the air. Holy power imbues the sword. The holy-sword has been made. You may now defeat unholy powers!))
     '(you do not have the cross.))))
 
-;enchantment-power combines the holy-sword with the spellbook to form the enchanted sword.	
+; enchantment-power combines the holy-sword with the spellbook to form the enchanted sword.	
 (game-action enchantment-power holy-sword spellbook catacombs
   (if(not(have 'holy-sword))	
       '(you do not have both the holy-sword and the spellbook)	
@@ -390,7 +391,7 @@
       '(you do not have the spellbook.))))
 
 
-;fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
+; fight-Minotaur uses the game-action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-minotaur sword minotaur minotaur-lair 
              (cond ((have 'sword) (new-object cross minotaur-lair)
                                   (new-object treasurekey-piece1 minotaur-lair)
@@ -403,7 +404,7 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a sword you are no match for the ferocious Minotaur. You lose! Try again!))))
 
-;fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
+; fight-Necromancer uses the game-action macro to determine the outcome of the game, whether you can move on.
 (game-action fight-necromancer holy-sword necromancer catacombs
              (cond ((have 'holy-sword) (new-object spellbook catacombs)
                                        (new-object treasurekey-piece2 catacombs)
@@ -415,7 +416,7 @@
                     '(You fought valiantly but without holy power you are no match for the deadly necromancer. You lose! Try again!))))
 
 
-;fight-dragon uses the game action macro to determine the outcome of the game, whether you can move on or not.
+; fight-dragon uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action fight-dragon enchanted-sword dragon dragons-den
              (cond ((have 'enchanted-sword) (new-object treasurekey-piece3 dragons-den)
                                   (new-object dragonhead dragons-den)
@@ -427,7 +428,7 @@
                    (setf *objects-locations* '((sword house)))
                     '(You fought valiantly but without a enchanted-sword you are no match for the vicious Blue Eyes White Dragon. You lose! Try again!))))
 
-;light uses the game action macro to determine the outcome of the game, whether you can move on or not.
+; light uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action light tinder torch dark-cave
              (cond ((have 'tinder) (new-object torch dark-cave)
                                    (new-path dark-cave labyrinth south broken-door)
@@ -435,7 +436,7 @@
                   (t 
                     '(You have nothing to light the torch with.))))
 
-;speak-king uses the game action macro to determine the outcome of the game, whether you can move on or not.
+; speak-king uses the game action macro to determine the outcome of the game, whether you can move on or not.
 (game-action speak-king dragonhead king castle
              (cond ((have 'dragonhead) (new-object treasurekey-piece4 castle)
                                        (new-path castle treasure-room north gate)
@@ -445,8 +446,8 @@
                     '(The king says there is a reward for anyone brave enough to kill the monsters terrorizing the village.))))
 
 
-;unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
+; unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
 (game-action unlock-treasure treasurekey treasure-chest treasure-room
              (cond ((have 'treasurekey) '(You opened the treasure chest and found the treasure! You win! ))
                  (t                               
-                    '(Sorry you havent collected all the pieces of the treasure-key and combined it to make the treasure-key. You should look around more to find them.))))
+                    '(Sorry but you require the treasure-key to open the chest. Your must continue your search for the pieces of the treasure-key in order to reforge the key!))))
