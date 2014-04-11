@@ -8,40 +8,41 @@
                             You hear commotion outside.))
                             
                         (village (You are in a small town.
-                           There is panic among the villagers as monsters have appeared in the area! 
-                           A mysterious man tells you east south west south.))
+                             There is panic among the villagers as monsters have appeared in the area! 
+                             A mysterious man tells you east south west south.))
                         (forest-trail (You are on the forest trail.
-                           A worn sign says there is a village to the north a cave to the south and a mountain to the west.))
+                             A worn sign says there is a village to the north a cave to the south and a mountain to the west.))
                         (castle (You are in the Castle.
-                           The king has offered a reward to someone who can kill the monsters and find his treasure key.))
+                             The king has offered a reward to someone who can kill the monsters and find his treasure key.))
                         (treasure-room (You are in the treasure room.
-                           There is a treasure chest in front of you.))
+                             There is a treasure chest in front of you.))
                         (catacombs (You are in the catacombs beneath the cathedral.
-                           Skulls align the walls and there is a foul smell in the air.
-                           There is a necromancer in the area.))
+                             Skulls align the walls and there is a foul smell in the air.
+                             There is a necromancer in the area.))
                         (dark-cave (you are in a dark cave. 
-                           You can barely see anything except for a torch on the wall.))
+                             You can barely see anything except for a torch on the wall.))
                         (labyrinth (You have tripped and fallen down a hole!
-                           You are now trapped in the labyrinth! 
-                           There are traps everywhere! 
-                           But you recall someone from the village telling how you to get out...))
+                             You are now trapped in the labyrinth! 
+                             There are traps everywhere! 
+                             But you recall someone from the village telling how you to get out...))
                         (cathedral (You are in a cathedral.
-                           The distressed people around you are praying for their safety.))
+                             The distressed people around you are praying for their safety.))
                         (mountain (You are on a tall mountain. 
-                           You hear noises coming from a cave.))
+                             You hear noises coming from a cave.))
                         (dragons-den (You are in the dragons den. 
-                           Bones align the floor. 
-                           The dragon awaits you here...))
+                             Bones align the floor. 
+                             The dragon awaits you here...))
                         (labyrinth2 (You move further into the labyrinth.))
                         (labyrinth3 (You move further into the labyrinth.))
                         (labyrinth4 (You see a light at the end of the corridor.
-                           You hear growls coming from someplace deeper in the maze.))
+                             You hear growls coming from someplace deeper in the maze.))
                         (hole (You have fallen down a hole!
-                           Spikes protrude from your body. 
-                           As you slowly lose consciousness you remember that person from the village and his message.
-                           Game Over.))
+                             Spikes protrude from your body as blood gushes from your body.
+                             Your body grows cold.
+                             As you slowly lose consciousness you remember a person from the village and his strange message.
+                             Game Over.))
                         (minotaur-lair (You have entered into the minotaurs lair. 
-                           You see a minotaur at the end of the room.))))
+                             You see a minotaur at the end of the room.))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
@@ -49,34 +50,46 @@
 
 ; This parameter contains the paths that players can take to move between places.
 (defparameter *edges* '((house (village outside door))
-                        (village (Castle west path)
-                                 (house inside door)
-                                 (cathedral east path)
-                                 (forest-trail south path))
-                        (Castle (village east path))
-                        (cathedral (village west door)
-                                   (catacombs down hole))
-                        (forest-trail (village north path)
-                                      (mountain west path)
-                                      (dark-cave south path))
-                        (catacombs (cathedral up hole))
-                        (mountain (forest-trail east path)
-                                  (dragons-den up cave))
-                        (dragons-den (mountain outside passage))
-                        (dark-cave (forest-trail north path))
-                        (labyrinth (labyrinth2 east path)
-                                   (hole south path)
-                                   (hole west path))
-                        (labyrinth2 (hole north path)
-                                    (hole east path)
-                                    (labyrinth3 south path))
-                        (labyrinth3 (hole east path)
-                                    (hole south path)
-                                    (labyrinth4 west path))
-                        (labyrinth4 (hole north path)
-                                    (hole east path)
-                                    (minotaur-lair south path))
-                        (minotaur-lair )))
+                        (village 
+                             (castle west path)
+                       	     (house inside door)
+                             (cathedral east path)
+                             (forest-trail south path))
+                        (castle 
+                             (village east path))
+                        (cathedral 
+                             (village west door)
+                             (catacombs down hole))
+                        (forest-trail 
+                             (village north path)
+                             (mountain west path)
+                             (dark-cave south path))
+                        (catacombs 
+                             (cathedral up hole))
+                        (mountain 
+                             (forest-trail east path)
+                             (dragons-den up cave))
+                        (dragons-den 
+                             (mountain outside passage))
+                        (dark-cave 
+                             (forest-trail north path))
+                        (labyrinth 
+                             (labyrinth2 east path)
+                             (hole south path)
+                             (hole west path))
+                        (labyrinth2 
+                             (hole north path)
+                             (hole east path)
+                             (labyrinth3 south path))
+                        (labyrinth3 
+                             (hole east path)
+                             (hole south path)
+                             (labyrinth4 west path))
+                        (labyrinth4 
+                             (hole north path)
+                             (hole east path)
+                             (minotaur-lair south path))
+                        (minotaur-lair ())))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
