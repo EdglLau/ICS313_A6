@@ -201,7 +201,7 @@
   (setf *location* 'house)
   (setf *objects* '(sword))
   (setf *objects-locations* '((sword house)))
-  (princ "Welcome hero! The Kingdom of Lastern needs your dire help! Take up arms and protect the Kingdom!")
+  (princ "Welcome hero! The Kingdom of Lastern has been besieged by monsters! Your must take up arms and protect the Kingdom!")
   (terpri)
   (game-repl))
   
