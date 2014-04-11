@@ -408,7 +408,7 @@
 (game-action fight-necromancer holy-sword necromancer catacombs
              (cond ((have 'holy-sword) (new-object spellbook catacombs)
                                        (new-object treasurekey-piece2 catacombs)
-                                       '(You killed Nekro the necromancer and find the second piece of the key guarded by it. Combine pieces 1 and 2 of the key!))
+                                       '(You have killed sinister necromancer Nekro and find the second piece of the key in his possession. You can now combine the first and second piece of the key!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -449,5 +449,5 @@
 ; unlock-treasuse uses the game action macro to determine the outcome of the game. If you have the treasurekey, you win.
 (game-action unlock-treasure treasurekey treasure-chest treasure-room
              (cond ((have 'treasurekey) '(You opened the treasure chest and found the treasure! You win! ))
-                 (t                               
+                  (t                               
                     '(Sorry but you require the treasure-key to open the chest. Your must continue your search for the pieces of the treasure-key in order to reforge the key!))))
