@@ -6,37 +6,42 @@
 ; This parameter shows the description to each place.
 (defparameter *nodes* '((house (you are currently at your house.
                             You hear commotion outside.))
-                        (village (you are in a small town.
-                            There is panic among the villagers as monsters have appeared in the area! A mysterious man tells you east south west south.))
-                        (forest-trail (you are on the forest trail.
-                            A worn sign says there is a village to the north a cave to the south and a mountain to the west.))
-                        (Castle (You are in the Castle.
-                           The king has offered a reward to someone who can kill the monsters and find his treasure key. ))
+                            
+                        (village (You are in a small town.
+                           There is panic among the villagers as monsters have appeared in the area! 
+                           A mysterious man tells you east south west south.))
+                        (forest-trail (You are on the forest trail.
+                           A worn sign says there is a village to the north a cave to the south and a mountain to the west.))
+                        (castle (You are in the Castle.
+                           The king has offered a reward to someone who can kill the monsters and find his treasure key.))
                         (treasure-room (You are in the treasure room.
                            There is a treasure chest in front of you.))
                         (catacombs (You are in the catacombs beneath the cathedral.
-                           Skulls align the walls and there is a foul smell in the air. There is a necromancer in the area.))
-                        (dark-cave (you are in a dark cave. You can barely see anything except for a torch on the wall. 
-                            ))
-                        (labyrinth (You trip and fall down a hole!
-                            You are trapped in the labyrinth! There are traps everywhere. You remember someone in the village told you which way to go...))
-                        (cathedral (you are in a cathedral.
-                           People around you are praying for their safety. ))
-                        (mountain (you are on a tall mountain.
+                           Skulls align the walls and there is a foul smell in the air.
+                           There is a necromancer in the area.))
+                        (dark-cave (you are in a dark cave. 
+                           You can barely see anything except for a torch on the wall.))
+                        (labyrinth (You have tripped and fallen down a hole!
+                           You are now trapped in the labyrinth! 
+                           There are traps everywhere! 
+                           But you recall someone from the village telling how you to get out...))
+                        (cathedral (You are in a cathedral.
+                           The distressed people around you are praying for their safety.))
+                        (mountain (You are on a tall mountain. 
                            You hear noises coming from a cave.))
-                        (dragons-den (You are in the dragons den.
-                            Bones align the floor. The dragon awaits you here...))
-                        (labyrinth2 (You are in a dark corridor.
-                                             ))
-                        (labyrinth3 (You are in a dark corridor.
-                                            ))
-                        (labyrinth4 (You are in a dark corridor.
-                            You hear growls coming from someplace deeper in the maze.))
-                        (hole (You have fell down a hole and died! Game Over.
-                                   ))
-                        (minotaur-lair (You are in the minotaur lair. 
-                             You see a minotaur at the end of the room. 
-                                        ))))
+                        (dragons-den (You are in the dragons den. 
+                           Bones align the floor. 
+                           The dragon awaits you here...))
+                        (labyrinth2 (You move further into the labyrinth.))
+                        (labyrinth3 (You move further into the labyrinth.))
+                        (labyrinth4 (You see a light at the end of the corridor.
+                           You hear growls coming from someplace deeper in the maze.))
+                        (hole (You have fallen down a hole!
+                           Spikes protrude from your body. 
+                           As you slowly lose consciousness you remember that person from the village and his message.
+                           Game Over.))
+                        (minotaur-lair (You have entered into the minotaurs lair. 
+                           You see a minotaur at the end of the room.))))
 
 ; This function describes the location.
 (defun describe-location (location nodes)
