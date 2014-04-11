@@ -155,7 +155,7 @@
     
 ; This function prints all available commands in the Wizard's World.                                   
 (defun help ()
-  `(you can use one of the following commands- ,@*allowed-commands*))
+  `(You can use one of the following commands- ,@*allowed-commands*))
 
 ; Alias to help, just lets user call help with "h" instead                  
 (defun h ()
@@ -301,7 +301,7 @@
             '(i cant ,command like that.)))
           (pushnew ',command *allowed-commands*)))
 
-;the parameters give the combined object after the collected pieces are combined into one object.
+; The parameters give the combined object after the collected pieces are combined into one object.
 (defparameter *half-treasurekey* nil)
 (defparameter *three-quarters-treasurekey* nil)
 (defparameter *treasurekey* nil)
@@ -324,7 +324,7 @@
       '(the half-treasurekey has been made.))
     '(you do not have the treasurekey-piece2.))))
 
-; The combine-three-quarters is the second macro action for combining the first three pieces of the treasurekey, 
+; The combine-three-quarters macro is the second macro action for combining the first three pieces of the treasurekey, 
 ; using half-treasurekey and treasurekey-piece3
 (game-action combine-three-quarters half-treasurekey treasurekey-piece3 dragons-den
   (if(not(have 'half-treasurekey))
@@ -341,7 +341,7 @@
       '(the three-quarters-treasurekey has been made.))
     '(you do not have the treasurekey-piece3.))))
 
-; The combine is the third macro action for combining the first three pieces of the treasurekey, 
+; Combine is the third macro action for combining the first three pieces of the treasurekey, 
 ; using three-quarters-treasurekey and treasurekey-piece4
 (game-action combine three-quarters-treasurekey treasurekey-piece4 castle
   (if(not(have 'three-quarters-treasurekey))
@@ -408,7 +408,7 @@
 (game-action fight-necromancer holy-sword necromancer catacombs
              (cond ((have 'holy-sword) (new-object spellbook catacombs)
                                        (new-object treasurekey-piece2 catacombs)
-                                       '(You have killed sinister necromancer Nekro and find the second piece of the key in his possession. You can now combine the first and second piece of the key!))
+                                       '(You have killed the sinister necromancer Nekro and find the second piece of the key in his possession. You can now combine the first and second piece of the key!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
@@ -420,8 +420,8 @@
 (game-action fight-dragon enchanted-sword dragon dragons-den
              (cond ((have 'enchanted-sword) (new-object treasurekey-piece3 dragons-den)
                                   (new-object dragonhead dragons-den)
-                                  '(You killed the Blue Eyes White Dragon and find the last piece of the key
-                                   guarded by it. Combine the parts here. The dragons head rolls on the floor. You killed all the monsters! Now pick up the dragonhead and  go to the king to receive the glory!))
+                                  '(You have killed the fearsonme dragon Blue-Eyes-White-Dragon and find the final piece of the key
+                                   amongst the corpses that lay nearby. You can now reforge the key. With your final thrust the dragons head rolls to the floor. You have killed all the monsters terrorising the Kingdom! Now pick up the dragonhead and go to the king to receive glory!))
                   (t 
                    (setf *location* 'house)
                    (setf *objects* '(sword))
