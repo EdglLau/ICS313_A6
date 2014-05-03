@@ -5,7 +5,7 @@
 
 ; This parameter shows the description to each place.
 (defparameter *nodes* '((house (you are currently at your house.
-                            You hear commotion outside.))
+                            You hear a commotion outside.))
                             
                         (village (You are in a small town.
                              There is panic among the villagers as monsters have appeared in the area! 
@@ -89,7 +89,8 @@
                              (hole north path)
                              (hole east path)
                              (minotaur-lair south path))
-                        (minotaur-lair ())))
+                        (minotaur-lair 
+                             )))
 
 ; This function describes a specific direction of a path from one location.
 (defun describe-path (edge)
@@ -199,9 +200,11 @@
 ; call to the game-repl function.
 (defun game-start ()
   (setf *location* 'house)
-  (setf *objects* '(sword))
-  (setf *objects-locations* '((sword house)))
-  (princ "Welcome hero! The Kingdom of Lastern has been besieged by monsters! Your must take up arms and protect the Kingdom before Kingdom falls into ruin!")
+  (setf *objects* '(sword tinder))
+  (setf *objects-locations* '((sword house) (tinder village)))
+  (princ "Welcome hero! The Kingdom of Lastern has been besieged by monsters! Your must take up arms and protect the Kingdom before everything falls into ruin!")
+  (terpri)
+  (princ "Hero! you must defeat the monsters besieging the Kingdom and collect the pieces of the treasure key.")
   (terpri)
   (game-repl))
   
